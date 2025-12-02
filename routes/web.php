@@ -15,6 +15,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Controllers\PrintController;
 
 
 /*
@@ -221,4 +222,16 @@ Route::middleware('auth')->prefix('support')->group(function () {
     Route::post('/message', [App\Http\Controllers\CustomerSupportController::class, 'store'])->name('customer-support.store');
     Route::get('/conversation/{conversationId}', [App\Http\Controllers\CustomerSupportController::class, 'viewConversation'])->name('customer-support.conversation');
     Route::post('/conversation/{conversationId}/reply', [App\Http\Controllers\CustomerSupportController::class, 'reply'])->name('customer-support.reply');
+});
+
+// Invoice and Delivery Note Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/invoice/{orderId}', [PrintController::class, 'invoice'])->name('invoice');
+    Route::get('/delivery-note/{orderId}', [PrintController::class, 'deliveryNote'])->name('delivery.note');
+});
+
+// Print Routes (accessible by admin)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/orders/{order}/invoice', [PrintController::class, 'invoice'])->name('orders.invoice');
+    Route::get('/delivery-notes/{deliveryNote}/print', [PrintController::class, 'deliveryNote'])->name('delivery-notes.print');
 });

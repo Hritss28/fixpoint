@@ -3,7 +3,7 @@
 
 Halo {{ $message->name }},
 
-Terima kasih telah menghubungi Gpx-Store. Kami telah menanggapi pesan Anda dengan subjek "{{ $message->subject }}".
+Terima kasih telah menghubungi Fixpoint. Kami telah menanggapi pesan Anda dengan subjek "{{ $message->subject }}".
 
 ## Pesan Anda:
 {{ $message->message }}

@@ -34,7 +34,7 @@ class FilamentServiceProvider extends ServiceProvider
             // For Filament v3.x
             \Filament\Support\Facades\FilamentView::registerRenderHook(
                 'panels::head.start',
-                fn (): string => '<meta name="description" content="Gpx-Store Admin Panel">'
+                fn (): string => '<meta name="description" content="Fixpoint Admin Panel">'
             );
         }
     }

@@ -37,7 +37,7 @@
         <div class="w-full max-w-md">
             <div class="text-center mb-10">
                 <h1 class="text-3xl font-bold text-gray-900">Welcome Back</h1>
-                <p class="text-gray-600 mt-2">Sign in to your GPX Store account</p>
+                <p class="text-gray-600 mt-2">Masuk ke akun Fixpoint Anda</p>
             </div>
             
             @if ($errors->any())

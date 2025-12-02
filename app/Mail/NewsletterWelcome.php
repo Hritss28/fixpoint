@@ -30,7 +30,7 @@ class NewsletterWelcome extends Mailable
      */
     public function build()
     {
-        return $this->subject('Welcome to GPX Store Newsletter!')
+        return $this->subject('Selamat Datang di Newsletter Fixpoint!')
                     ->view('emails.newsletter-welcome');
     }
 }

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Pesan #' . $message->id . ' - Gpx-Store')
+@section('title', 'Detail Pesan #' . $message->id . ' - Fixpoint')
 
-@section('meta_description', 'Detail dan status pesan kontak #' . $message->id . ' di Gpx-Store.')
+@section('meta_description', 'Detail dan status pesan kontak #' . $message->id . ' di Fixpoint Toko Material.')
 
 @section('content')
 <div class="bg-gradient-to-b from-blue-50 to-white py-12">

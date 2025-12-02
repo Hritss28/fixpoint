@@ -52,10 +52,10 @@
             
             <p>Thank you for shopping with us!</p>
             
-            <p>Best regards,<br>GPX Store Team</p>
+            <p>Best regards,<br>Fixpoint Team</p>
         </div>
         <div class="footer">
-            <p>&copy; {{ date('Y') }} GPX Store. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} Fixpoint. All rights reserved.</p>
         </div>
     </div>
 </body>

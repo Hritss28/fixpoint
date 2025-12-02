@@ -20,7 +20,7 @@
     }
     
     .price {
-        color: #3b82f6;
+        color: #c2410c;
         font-weight: 600;
     }
     
@@ -108,7 +108,7 @@
                 </nav>
             </div>
             <div class="mt-4 md:mt-0">
-                <select name="sort" class="bg-white border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" onchange="window.location.href = this.value">
+                <select name="sort" class="bg-white border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" onchange="window.location.href = this.value">
                     <option value="{{ route('shop', array_merge(request()->except('sort'), ['sort' => 'newest'])) }}" {{ $sort == 'newest' ? 'selected' : '' }}>Sort by: Newest</option>
                     <option value="{{ route('shop', array_merge(request()->except('sort'), ['sort' => 'price_asc'])) }}" {{ $sort == 'price_asc' ? 'selected' : '' }}>Price: Low to High</option>
                     <option value="{{ route('shop', array_merge(request()->except('sort'), ['sort' => 'price_desc'])) }}" {{ $sort == 'price_desc' ? 'selected' : '' }}>Price: High to Low</option>
@@ -124,7 +124,7 @@
 <div class="container mx-auto px-4 py-8">
     <!-- Category Filter (Mobile) -->
     <div class="md:hidden mb-6">
-        <button id="mobile-filter-button" class="w-full bg-white border border-gray-300 rounded-lg py-2 px-4 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button id="mobile-filter-button" class="w-full bg-white border border-gray-300 rounded-lg py-2 px-4 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-orange-500">
             <span>Filter by Category</span>
             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -135,7 +135,7 @@
                 <ul class="space-y-2">
                     @foreach($categories as $cat)
                         <li>
-                            <a href="{{ route('shop', ['category' => $cat->id]) }}" class="block py-2 text-gray-600 hover:text-blue-600 {{ $category == $cat->id ? 'text-blue-600 font-medium' : '' }}">
+                            <a href="{{ route('shop', ['category' => $cat->id]) }}" class="block py-2 text-gray-600 hover:text-orange-700 {{ $category == $cat->id ? 'text-orange-700 font-medium' : '' }}">
                                 {{ $cat->name }}
                             </a>
                         </li>
@@ -153,7 +153,7 @@
                 <ul class="space-y-2">
                     @foreach($categories as $cat)
                         <li class="flex items-center">
-                            <a href="{{ route('shop', ['category' => $cat->id]) }}" class="text-gray-600 hover:text-blue-600 {{ $category == $cat->id ? 'text-blue-600 font-medium' : '' }}">
+                            <a href="{{ route('shop', ['category' => $cat->id]) }}" class="text-gray-600 hover:text-orange-700 {{ $category == $cat->id ? 'text-orange-700 font-medium' : '' }}">
                                 {{ $cat->name }}
                                 @if(isset($cat->products))
                                     ({{ $cat->products->count() }})
@@ -185,7 +185,7 @@
                             <input type="number" name="price_max" value="{{ $priceMax ?? 2000000 }}" class="w-full bg-transparent border-none text-sm text-gray-600 focus:outline-none" min="0">
                         </div>
                     </div>
-                    <button type="submit" class="w-full mt-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Apply</button>
+                    <button type="submit" class="w-full mt-4 py-2 bg-orange-700 text-white rounded-md hover:bg-orange-800">Apply</button>
                 </form>
             </div>
             
@@ -237,10 +237,17 @@
                         <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden">
                             <div class="relative overflow-hidden">
                                 <a href="{{ route('product', ['id' => $product->id]) }}">
-                                    @if($product->image)
+                                    @if($product->image && file_exists(storage_path('app/public/' . $product->image)))
                                         <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
                                     @else
-                                        <img src="https://via.placeholder.com/300x300?text={{ urlencode($product->name) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
+                                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                                            <div class="text-center p-4">
+                                                <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                </svg>
+                                                <span class="text-gray-500 text-xs">{{ Str::limit($product->name, 20) }}</span>
+                                            </div>
+                                        </div>
                                     @endif
                                 </a>
                                 @if($product->discount_price && $product->discount_price < $product->price)
@@ -252,7 +259,7 @@
                             </div>
                             <div class="p-4">
                                 <a href="{{ route('product', ['id' => $product->id]) }}">
-                                    <h2 class="text-gray-800 font-medium mb-1 hover:text-blue-600">{{ $product->name }}</h2>
+                                    <h2 class="text-gray-800 font-medium mb-1 hover:text-orange-700">{{ $product->name }}</h2>
                                 </a>
                                 @if(isset($product->brand) && $product->brand)
                                     <div class="flex items-center text-sm text-gray-500 mb-2">
@@ -317,7 +324,7 @@
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                 <input type="hidden" name="quantity" value="1">
                                                 <button type="submit" 
-                                                    class="p-2 bg-blue-600 hover:bg-blue-700 rounded-full text-white transition-colors duration-300 add-to-cart-button"
+                                                    class="p-2 bg-orange-700 hover:bg-orange-800 rounded-full text-white transition-colors duration-300 add-to-cart-button"
                                                     aria-label="Add to Cart">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
@@ -353,7 +360,7 @@
                     <h3 class="mt-2 text-sm font-medium text-gray-900">No products found</h3>
                     <p class="mt-1 text-sm text-gray-500">Try adjusting your search or filter criteria.</p>
                     <div class="mt-6">
-                        <a href="{{ route('shop') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+                        <a href="{{ route('shop') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-700 hover:bg-orange-800">
                             Clear all filters
                         </a>
                     </div>

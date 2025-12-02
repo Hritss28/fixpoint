@@ -11,9 +11,9 @@ class TestEmailController extends Controller
     public function sendTestEmail()
     {
         try {
-            Mail::raw('This is a test email from GPX Store', function($message) {
+            Mail::raw('This is a test email from Fixpoint', function($message) {
                 $message->to('your-test-email@example.com')
-                        ->subject('GPX Store Test Email');
+                        ->subject('Fixpoint Test Email');
             });
             
             return response()->json([

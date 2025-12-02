@@ -96,7 +96,7 @@
                 @endif
                 
                 <div class="mt-6 text-sm text-center text-gray-500">
-                    <p>Jika Anda mengalami masalah dengan email verifikasi, silakan hubungi <a href="mailto:support@gpx-store.com" class="text-blue-600 hover:text-blue-800">support@gpx-store.com</a></p>
+                    <p>Jika Anda mengalami masalah dengan email verifikasi, silakan hubungi <a href="mailto:support@fixpoint.id" class="text-blue-600 hover:text-blue-800">support@fixpoint.id</a></p>
                 </div>
             </div>
         </div>

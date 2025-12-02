@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Hubungi Kami - Gpx-Store')
+@section('title', 'Hubungi Kami - Fixpoint')
 
-@section('meta_description', 'Hubungi tim customer service Gpx-Store untuk pertanyaan, bantuan, atau dukungan teknis.')
+@section('meta_description', 'Hubungi tim customer service Fixpoint untuk pertanyaan, bantuan, atau dukungan teknis.')
 
 @section('content')
 <div class="bg-gradient-to-b from-blue-50 to-white py-12">
@@ -28,7 +28,7 @@
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-800">Email</h3>
-                                    <p class="text-gray-600">support@gpx-store.com</p>
+                                    <p class="text-gray-600">support@fixpoint.id</p>
                                 </div>
                             </div>
                         </div>

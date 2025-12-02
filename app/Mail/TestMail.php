@@ -17,7 +17,7 @@ class TestMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Test Email from GPX Store')
+        return $this->subject('Test Email dari Fixpoint')
                     ->view('emails.test');
     }
 }

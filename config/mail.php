@@ -112,9 +112,9 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'noreply@gpx-store.com'),
-        'name' => env('MAIL_FROM_NAME', 'GPX Store'),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply@fixpoint.id'),
+        'name' => env('MAIL_FROM_NAME', 'Fixpoint'),
     ],
 
-    'admin_address' => env('MAIL_ADMIN_ADDRESS', 'admin@gpx-store.com'),
+    'admin_address' => env('MAIL_ADMIN_ADDRESS', 'admin@fixpoint.id'),
 ];

@@ -33,7 +33,7 @@ class NewContactMessageNotification extends Notification implements ShouldQueue
             ->line('Anda telah menerima pesan kontak baru dari ' . $this->contactMessage->name . '.')
             ->line('Subjek: ' . $this->contactMessage->subject)
             ->action('Lihat Pesan', route('filament.resources.contact-messages.view', $this->contactMessage->id))
-            ->line('Terima kasih telah menggunakan aplikasi Gpx-Store.');
+            ->line('Terima kasih telah menggunakan aplikasi Fixpoint.');
     }
 
     public function toDatabase($notifiable): array

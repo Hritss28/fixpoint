@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Pesan Anda - Gpx-Store')
+@section('title', 'Daftar Pesan Anda - Fixpoint')
 
-@section('meta_description', 'Daftar pesan kontak yang telah Anda kirim ke Gpx-Store.')
+@section('meta_description', 'Daftar pesan kontak yang telah Anda kirim ke Fixpoint.')
 
 @section('content')
 <div class="bg-gradient-to-b from-blue-50 to-white py-12">

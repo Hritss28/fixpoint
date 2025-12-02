@@ -62,11 +62,11 @@
     }
     /* Custom Utility Classes */
     .bg-gradient-primary {
-        background: linear-gradient(to right, #4f46e5, #1d4ed8);
+        background: linear-gradient(to right, #c2410c, #a16207);
     }
     
     .text-gradient {
-        background: linear-gradient(to right, #60a5fa, #8b5cf6);
+        background: linear-gradient(to right, #ea580c, #ca8a04);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -151,13 +151,13 @@
         position: absolute;
         top: 12px;
         right: 12px;
-        background: linear-gradient(to right, #ff1a6c, #ff5e62);
+        background: linear-gradient(to right, #c2410c, #a16207);
         color: white;
         font-size: 0.75rem;
         font-weight: 600;
         padding: 0.25rem 0.75rem;
         border-radius: 9999px;
-        box-shadow: 0 4px 6px rgba(255, 26, 108, 0.3);
+        box-shadow: 0 4px 6px rgba(249, 115, 22, 0.3);
         animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
     
@@ -221,7 +221,7 @@
     }
     
     .promo-banner-bg {
-        background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+        background: linear-gradient(135deg, #c2410c 0%, #a16207 100%);
         position: relative;
     }
     
@@ -298,7 +298,7 @@
         position:absolute;
         bottom:0;
         left:0;
-        background: #3730a3;
+        background: #c2410c;
     }
 
     .wave {
@@ -344,19 +344,19 @@
             <!-- Banner Image Background -->
             <div class="absolute inset-0 overflow-hidden">
                 <!-- Product Banner Image from Admin -->
-                <img src="{{ Storage::url($homeBanner->banner_image) }}" alt="{{ $homeBanner->banner_title ?? 'GPX Bags Collection' }}" 
+                <img src="{{ Storage::url($homeBanner->banner_image) }}" alt="{{ $homeBanner->banner_title ?? 'Fixpoint Material Bangunan' }}" 
                      class="w-full h-full object-cover object-center">
                 
                 <!-- Gradient Overlay for better text readability -->
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-900/70 to-indigo-900/60"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-orange-900/70 to-yellow-900/60"></div>
             </div>
         @else
             <!-- Fallback to Original Animated Background Elements -->
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-900 to-indigo-900 overflow-hidden ripple-bg">
+            <div class="absolute inset-0 bg-gradient-to-r from-orange-800 to-amber-700 overflow-hidden ripple-bg">
                 <!-- Animated Blobs -->
-                <div class="hero-blob bg-blue-400 w-96 h-96 top-1/4 left-1/4 animate-blob animation-delay-2000"></div>
-                <div class="hero-blob bg-purple-500 w-96 h-96 top-1/3 right-1/4 animate-blob animation-delay-4000"></div>
-                <div class="hero-blob bg-pink-500 w-96 h-96 bottom-1/4 left-1/2 animate-blob"></div>
+                <div class="hero-blob bg-orange-600 w-96 h-96 top-1/4 left-1/4 animate-blob animation-delay-2000"></div>
+                <div class="hero-blob bg-amber-600 w-96 h-96 top-1/3 right-1/4 animate-blob animation-delay-4000"></div>
+                <div class="hero-blob bg-amber-700 w-96 h-96 bottom-1/4 left-1/2 animate-blob"></div>
                 
                 <!-- Abstract Lines -->
                 <svg class="absolute w-full h-full opacity-20" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -380,20 +380,20 @@
                 </div>
                 
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-6">
-                    <span class="block mb-2">Koleksi Tas</span>
-                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300">Eksklusif GPX</span>
+                    <span class="block mb-2">Material Bangunan</span>
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-400">Terlengkap di Fixpoint</span>
                 </h1>
                 
-                <p class="mt-6 max-w-lg mx-auto text-xl text-blue-100">
-                    Temukan tas berkualitas premium dengan desain terkini untuk gaya penampilanmu
+                <p class="mt-6 max-w-lg mx-auto text-xl text-orange-100">
+                    Temukan berbagai material bangunan berkualitas tinggi untuk proyek konstruksi dan renovasi Anda
                 </p>
                 
                 <div class="mt-10 flex flex-wrap justify-center gap-4">
                     <a href="{{ route('shop') }}" 
-                       class="relative inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group overflow-hidden">
+                       class="relative inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-orange-800 bg-white hover:bg-orange-50 md:py-4 md:text-lg md:px-10 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group overflow-hidden">
                         <span class="relative z-10">Belanja Sekarang</span>
                         <span class="absolute inset-0 bg-white z-0"></span>
-                        <span class="absolute inset-0 bg-gradient-to-r from-blue-100 to-blue-200 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 z-0"></span>
+                        <span class="absolute inset-0 bg-gradient-to-r from-orange-100 to-yellow-100 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 z-0"></span>
                     </a>
                     
                     <a href="#featured" 
@@ -466,7 +466,7 @@
                             <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">
                                 {{ $homepagePromo->promotion_title ?? 'Diskon Spesial!' }}
                             </h3>
-                            <p class="text-blue-100 mb-6 md:pr-16">
+                            <p class="text-orange-100 mb-6 md:pr-16">
                                 {{ $homepagePromo->description  ?? 'Gunakan kode promo untuk mendapatkan diskon spesial. Tawaran berlaku untuk waktu terbatas.' }}
                             </p>
                             
@@ -477,25 +477,25 @@
                                 <div class="promo-countdown">
                                     <div class="countdown-item">
                                         <div class="text-2xl font-bold text-white countdown-days timess">00</div>
-                                        <div class="text-xs text-blue-100">Hari</div>
+                                        <div class="text-xs text-orange-100">Hari</div>
                                     </div>
                                     <div class="countdown-item">
                                         <div class="text-2xl font-bold text-white countdown-hours timess">00</div>
-                                        <div class="text-xs text-blue-100">Jam</div>
+                                        <div class="text-xs text-orange-100">Jam</div>
                                     </div>
                                     <div class="countdown-item">
                                         <div class="text-2xl font-bold text-white countdown-minutes timess">00</div>
-                                        <div class="text-xs text-blue-100">Menit</div>
+                                        <div class="text-xs text-orange-100">Menit</div>
                                     </div>
                                     <div class="countdown-item">
                                         <div class="text-2xl font-bold text-white timess">00</div>
-                                        <div class="text-xs text-blue-100">Detik</div>
+                                        <div class="text-xs text-orange-100">Detik</div>
                                     </div>
                                 </div>
                             </div>
                             @endif
                             
-                            <a href="{{ route('shop') }}" class="inline-flex items-center px-6 py-3 bg-white text-blue-700 font-medium rounded-md hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <a href="{{ route('shop') }}" class="inline-flex items-center px-6 py-3 bg-white text-orange-800 font-medium rounded-md hover:bg-orange-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
                                 Belanja Sekarang
                                 <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -518,7 +518,7 @@
                             </div>
                             
                             <div class="text-center">
-                                <span class="text-xs text-blue-100">
+                                <span class="text-xs text-orange-100">
                                     {{ $homepagePromo->promotion_note ?? 
                                       ($homepagePromo->minimum_order > 0 ? 
                                       '*Minimum transaksi Rp ' . number_format($homepagePromo->minimum_order, 0, ',', '.') : 
@@ -537,11 +537,11 @@
     <section id="featured" class="py-24 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16" data-aos="fade-up">
-                <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-3">KATEGORI UNGGULAN</span>
+                <span class="inline-block px-3 py-1 bg-orange-200 text-orange-800 rounded-full text-sm font-semibold mb-3">KATEGORI UNGGULAN</span>
                 <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">
                     <span class="block relative">
                         Koleksi Kategori
-                        <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded"></span>
+                        <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-orange-700 rounded"></span>
                     </span>
                 </h2>
                 <p class="mt-6 max-w-2xl text-xl text-gray-500 mx-auto">
@@ -562,7 +562,7 @@
                             <p class="text-gray-200 mb-4 max-w-xs">{{ $category->description ?? 'Koleksi tas ' . $category->name . ' dengan berbagai pilihan model dan warna.' }}</p>
                         </div>
                         <a href="{{ route('shop', ['category' => $category->id]) }}" 
-                           class="inline-flex items-center px-4 py-2 bg-white text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-all duration-300 transform translate-y-0 hover:translate-y-0 hover:scale-105 shadow-lg max-w-max">
+                           class="inline-flex items-center px-4 py-2 bg-white text-orange-800 font-medium rounded-md hover:bg-orange-50 transition-all duration-300 transform translate-y-0 hover:translate-y-0 hover:scale-105 shadow-lg max-w-max">
                             <span>Jelajahi Koleksi</span>
                             <svg class="ml-2 w-4 h-4 transition-all duration-300 transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -578,7 +578,7 @@
     <!-- Trending Collection Banner -->
     <section class="relative py-16 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="relative bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl overflow-hidden">
+            <div class="relative bg-gradient-to-r from-orange-700 to-amber-600 rounded-3xl overflow-hidden">
                 <div class="absolute right-0 top-0 -mt-20 -mr-20">
                     <svg width="400" height="400" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="text-white opacity-10">
                         <path fill="currentColor" d="M42,-72.2C54.9,-65.2,66,-55.3,76.4,-42.8C86.9,-30.2,96.6,-15.1,95.9,-0.4C95.2,14.3,84,28.6,73.3,42.3C62.6,56,52.4,69.1,39,76.3C25.7,83.6,9.1,85,-5.9,80.9C-20.9,76.9,-34.4,67.5,-46.6,56.8C-58.8,46.1,-69.7,34.1,-76.7,19.4C-83.8,4.7,-87.1,-12.6,-82.1,-27.5C-77.1,-42.5,-63.8,-55,-48.7,-61.4C-33.5,-67.9,-16.7,-68.2,-0.3,-67.7C16.2,-67.1,32.4,-65.7,42,-72.2Z" transform="translate(100 100)" />
@@ -589,9 +589,9 @@
                     <div class="p-12 md:p-16" data-aos="fade-right">
                         <span class="inline-block px-3 py-1 bg-white bg-opacity-20 text-white rounded-full text-sm font-semibold mb-4 backdrop-blur-sm">KOLEKSI TERBARU</span>
                         <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Koleksi Trending 2025</h2>
-                        <p class="text-blue-100 mb-8 text-lg">Tas eksklusif dengan desain unggulan yang menjadi tren fashion tahun ini.</p>
+                        <p class="text-orange-100 mb-8 text-lg">Tas eksklusif dengan desain unggulan yang menjadi tren fashion tahun ini.</p>
                         <a href="{{ route('shop', ['collection' => 'trending']) }}" 
-                           class="inline-flex items-center px-6 py-3 bg-white text-blue-700 font-medium rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg">
+                           class="inline-flex items-center px-6 py-3 bg-white text-orange-800 font-medium rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg">
                             Lihat Koleksi
                             <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -601,22 +601,39 @@
                     
                     <div class="relative h-full" data-aos="fade-left">
                         @if(isset($bestSellingProduct) && $bestSellingProduct)
-                            <div class="w-[320px] h-[320px] rounded-2xl overflow-hidden mx-auto my-8 drop-shadow-xl">
-                                <img src="{{ asset('storage/' . $bestSellingProduct->image) }}" 
-                                    alt="{{ $bestSellingProduct->name }}" 
-                                    class="w-full h-full object-cover" />
+                            <div class="w-[320px] h-[320px] rounded-2xl overflow-hidden mx-auto my-8 drop-shadow-xl bg-white">
+                                @if($bestSellingProduct->image && file_exists(storage_path('app/public/' . $bestSellingProduct->image)))
+                                    <img src="{{ asset('storage/' . $bestSellingProduct->image) }}" 
+                                        alt="{{ $bestSellingProduct->name }}" 
+                                        class="w-full h-full object-cover" />
+                                @else
+                                    <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                                        <div class="text-center p-4">
+                                            <svg class="w-20 h-20 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                            </svg>
+                                            <span class="text-gray-600 font-medium">{{ Str::limit($bestSellingProduct->name, 25) }}</span>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
-                        
                         @else
-                            <img src="{{ asset('images/trending-collection.jpg') }}" 
-                                alt="Trending Collection" 
-                                class="w-[280px] h-[320px] object-contain rounded-lg mx-auto my-8 drop-shadow-xl" />
+                            <div class="w-[320px] h-[320px] rounded-2xl overflow-hidden mx-auto my-8 drop-shadow-xl bg-white flex items-center justify-center">
+                                <div class="text-center p-4">
+                                    <svg class="w-20 h-20 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="text-gray-600 font-medium">Trending Collection</span>
+                                </div>
+                            </div>
                         @endif
                     
+                        @if(isset($bestSellingProduct) && $bestSellingProduct)
                         <div class="absolute bottom-4 right-4 bg-white bg-opacity-90 backdrop-blur-sm p-4 rounded-lg shadow-lg">
-                            <div class="text-sm font-semibold text-blue-800">Harga Produk</div>
-                            <div class="text-3xl font-bold text-blue-600">{{'Rp ' . number_format($bestSellingProduct->price, 0, ',', '.')  }}</div>
+                            <div class="text-sm font-semibold text-orange-800">Harga Produk</div>
+                            <div class="text-3xl font-bold text-orange-800">{{'Rp ' . number_format($bestSellingProduct->price, 0, ',', '.')  }}</div>
                         </div>
+                        @endif
                     </div>                                     
                 </div>
             </div>
@@ -628,17 +645,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center mb-16">
                 <div class="mb-6 md:mb-0" data-aos="fade-right">
-                    <span class="inline-block px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-sm font-semibold mb-3">BARU DATANG</span>
+                    <span class="inline-block px-3 py-1 bg-orange-200 text-orange-800 rounded-full text-sm font-semibold mb-3">BARU DATANG</span>
                     <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 relative">
                         Produk Terbaru
-                        <span class="absolute -bottom-2 left-0 w-24 h-1 bg-pink-500 rounded"></span>
+                        <span class="absolute -bottom-2 left-0 w-24 h-1 bg-orange-700 rounded"></span>
                     </h2>
                     <p class="mt-4 text-lg text-gray-600 max-w-2xl">
                         Koleksi tas terbaru kami dengan desain eksklusif dan kualitas premium
                     </p>
                 </div>
                 <a href="{{ route('shop') }}" data-aos="fade-left" 
-                   class="px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 flex items-center shadow-lg hover:shadow-xl">
+                   class="px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-orange-700 to-amber-600 hover:from-orange-800 hover:to-amber-700 transition-all duration-300 transform hover:scale-105 flex items-center shadow-lg hover:shadow-xl">
                     <span>Lihat Semua Produk</span>
                     <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -650,15 +667,26 @@
                 @foreach ($latestProducts->take(8) as $index => $product)
                 <div class="product-card bg-white rounded-xl shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                     <div class="relative overflow-hidden">
-                        <img class="product-img h-64 w-full object-cover" 
-                             src="{{ asset('storage/' . $product->image) }}" 
-                             alt="{{ $product->name }}">
+                        @if($product->image && file_exists(storage_path('app/public/' . $product->image)))
+                            <img class="product-img h-64 w-full object-cover" 
+                                 src="{{ asset('storage/' . $product->image) }}" 
+                                 alt="{{ $product->name }}">
+                        @else
+                            <div class="product-img h-64 w-full bg-gray-200 flex items-center justify-center">
+                                <div class="text-center p-4">
+                                    <svg class="w-16 h-16 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="text-gray-500 text-sm">{{ Str::limit($product->name, 30) }}</span>
+                                </div>
+                            </div>
+                        @endif
                         <div class="badge-new">BARU</div>
                         
                         <!-- Quick View Overlay -->
                         <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 transition-opacity duration-300 flex items-center justify-center quick-view">
-                            <a href="{{ route('product', $product->id) }}" class="bg-white rounded-full p-3 transform transition-all duration-300 hover:scale-110 hover:bg-blue-50 shadow-lg">
-                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <a href="{{ route('product', $product->id) }}" class="bg-white rounded-full p-3 transform transition-all duration-300 hover:scale-110 hover:bg-orange-50 shadow-lg">
+                                <svg class="w-6 h-6 text-orange-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
@@ -669,7 +697,7 @@
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-2">
                             <a href="{{ route('product', ['id' => $product->id]) }}">
-                                <h2 class="text-gray-800 font-medium mb-1 hover:text-blue-600">{{ $product->name }}</h2>
+                                <h2 class="text-gray-800 font-medium mb-1 hover:text-orange-800">{{ $product->name }}</h2>
                             </a>
                         </div>
 
@@ -708,7 +736,7 @@
                         
                         <div class="flex justify-between items-center">
                             {{-- harga --}}
-                            <span class="text-blue-600 font-bold text-lg">{{ 'Rp ' . number_format($product->price, 0, ',', '.') }}</span>
+                            <span class="text-orange-800 font-bold text-lg">{{ 'Rp ' . number_format($product->price, 0, ',', '.') }}</span>
                             <div class="flex space-x-2">
                                 {{-- Wishlist --}}
                                 @auth
@@ -730,7 +758,7 @@
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="p-2 bg-blue-600 hover:bg-blue-700 rounded-full text-white transition-colors duration-300 add-to-cart-button">
+                                    <button type="submit" class="p-2 bg-orange-700 hover:bg-orange-800 rounded-full text-white transition-colors duration-300 add-to-cart-button">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                                         </svg>
@@ -754,7 +782,7 @@
 
 
     <!-- Stats Counter -->
-    <section class="py-20 bg-gradient-to-r from-blue-600 to-indigo-700 relative overflow-hidden">
+    <section class="py-20 bg-gradient-to-r from-orange-700 to-amber-600 relative overflow-hidden">
         <div class="absolute inset-0 overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-full">
                 <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full mix-blend-overlay filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
@@ -782,7 +810,7 @@
                         </svg>
                     </div>
                     <div class="text-3xl md:text-4xl font-bold mb-2" data-counter="{{ str_replace('+', '', $stat['number']) }}">{{ $stat['number'] }}</div>
-                    <p class="text-blue-100">{{ $stat['label'] }}</p>
+                    <p class="text-orange-100">{{ $stat['label'] }}</p>
                 </div>
                 @endforeach
             </div>
@@ -819,7 +847,7 @@
                                 <h3 class="text-lg font-semibold text-gray-900 truncate" title="{{ $review->product->name }}">
                                     {{ \Illuminate\Support\Str::limit($review->product->name, 25) }}
                                 </h3>
-                                <a href="{{ route('product', $review->product->id) }}" class="text-sm text-blue-600 hover:underline">Lihat Produk</a>
+                                <a href="{{ route('product', $review->product->id) }}" class="text-sm text-orange-800 hover:underline">Lihat Produk</a>
                             </div>
                         </div>
     
@@ -872,7 +900,7 @@
                 <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-6">
                     Siap Memperbarui Koleksi Tas Anda?
                 </h2>
-                <p class="mt-4 max-w-2xl text-xl text-blue-100 mx-auto">
+                <p class="mt-4 max-w-2xl text-xl text-orange-100 mx-auto">
                     Dapatkan diskon 15% untuk pembelian pertama dengan mendaftar newsletter kami
                 </p>
                 <div class="mt-12 flex justify-center">
@@ -882,11 +910,11 @@
                             <div class="flex-grow">
                                 <label for="email-address" class="sr-only">Alamat Email</label>
                                 <input id="email-address" name="email" type="email" autocomplete="email" required 
-                                       class="w-full px-5 py-3 border border-transparent placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-md shadow-lg transform transition-all duration-300 focus:scale-105"
+                                       class="w-full px-5 py-3 border border-transparent placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-orange-700 rounded-md shadow-lg transform transition-all duration-300 focus:scale-105"
                                        placeholder="Masukkan email Anda">
                             </div>
                             <button type="submit" id="newsletter-submit"
-                                   class="w-full sm:w-auto flex-shrink-0 px-6 py-3 bg-white text-blue-700 font-medium rounded-md hover:bg-blue-50 focus:outline-none shadow-lg transform transition-all duration-300 hover:scale-105">
+                                   class="w-full sm:w-auto flex-shrink-0 px-6 py-3 bg-white text-orange-800 font-medium rounded-md hover:bg-orange-50 focus:outline-none shadow-lg transform transition-all duration-300 hover:scale-105">
                                 Daftar Sekarang
                             </button>
                         </form>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'GPX Store' }}</title>
+    <title>{{ $title ?? 'Fixpoint - Toko Material Bangunan' }}</title>
     <link rel="icon" href="{{ asset('images/icon1.png') }}" type="image/x-icon">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,7 +30,7 @@
         }
         
         .nav-link:hover {
-            color: #3b82f6;
+            color: #f97316;
         }
         
         .nav-link::after {
@@ -40,7 +40,7 @@
             height: 2px;
             bottom: 0;
             left: 50%;
-            background-color: #3b82f6;
+            background-color: #f97316;
             transition: all 0.3s ease;
         }
         
@@ -50,7 +50,7 @@
         }
         
         .nav-link.active {
-            color: #3b82f6;
+            color: #f97316;
             font-weight: 500;
         }
         
@@ -156,7 +156,7 @@
         }
         
         .footer-link:hover {
-            color: #3b82f6;
+            color: #f97316;
             transform: translateX(5px);
         }
         
@@ -166,7 +166,7 @@
             right: 20px;
             width: 40px;
             height: 40px;
-            background-color: #3b82f6;
+            background-color: #f97316;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -176,7 +176,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 4px 10px rgba(249, 115, 22, 0.5);
             z-index: 30;
         }
         
@@ -201,21 +201,21 @@
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
     <!-- Top Bar -->
-    <div class="bg-blue-600 text-white py-2 text-sm">
+    <div class="bg-gradient-to-r from-orange-700 to-amber-600 text-white py-2 text-sm">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
             <div>
-                <a href="tel:+62895337436089" class="mr-4 hover:text-blue-200">
+                <a href="tel:+62895337436089" class="mr-4 hover:text-orange-200">
                     <i class="fas fa-phone-alt mr-2"></i>0895-33743-6089
                 </a>
-                <a href="mailto:info@gpx-store.com" class="hover:text-blue-200">
-                    <i class="fas fa-envelope mr-2"></i>info@gpx-store.com
+                <a href="mailto:info@fixpoint.id" class="hover:text-orange-200">
+                    <i class="fas fa-envelope mr-2"></i>info@fixpoint.id
                 </a>
             </div>
             <div class="mt-2 md:mt-0">
-                <a href="#" class="ml-3 hover:text-blue-200">
+                <a href="#" class="ml-3 hover:text-orange-200">
                     <i class="fas fa-map-marker-alt mr-1"></i>Cek Lokasi Toko
                 </a>
-                <a href="#" class="ml-3 hover:text-blue-200">
+                <a href="#" class="ml-3 hover:text-orange-200">
                     <i class="fas fa-shipping-fast mr-1"></i>Cek Pengiriman
                 </a>
             </div>
@@ -228,7 +228,7 @@
             <div class="flex justify-between items-center py-4">
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="flex items-center">
-                    <img src="{{ asset('images/logo.png') }}" alt="GPX Store" class="h-8 mr-2">
+                    <img src="{{ asset('images/logo.png') }}" alt="Fixpoint" class="h-12 mr-2">
                 </a>
                 
                 <!-- Search Form - Desktop -->
@@ -236,8 +236,8 @@
                     <form action="{{ route('shop') }}" method="GET" class="w-full">
                         <div class="relative">
                             <input type="text" name="search" placeholder="Cari produk..." 
-                                   class="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <button type="submit" class="absolute right-0 top-0 bottom-0 flex items-center px-3 text-gray-500 hover:text-blue-600">
+                                   class="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                            <button type="submit" class="absolute right-0 top-0 bottom-0 flex items-center px-3 text-gray-500 hover:text-orange-600">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -306,7 +306,7 @@
                     
                     <!-- Cart -->
                     <a href="{{ route('cart') }}" class="relative inline-flex items-center p-2">
-                        <svg class="w-6 h-6 text-gray-600 hover:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="w-6 h-6 text-gray-600 hover:text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                         <span class="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full cart-count">
@@ -322,12 +322,12 @@
                     
                     <!-- User Account -->
                     <div class="dropdown ml-1" id="user-dropdown">
-                        <button class="p-2 text-gray-600 hover:text-blue-600" id="user-dropdown-toggle">
+                        <button class="p-2 text-gray-600 hover:text-orange-600" id="user-dropdown-toggle">
                             @auth
                                 @if(Auth::user()->avatar)
                                     <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="h-8 w-8 rounded-full object-cover border border-gray-200">
                                 @else
-                                    <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">
+                                    <div class="h-8 w-8 rounded-full bg-orange-500 flex items-center justify-center text-white font-medium">
                                         {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                                     </div>
                                 @endif
@@ -360,7 +360,7 @@
                         </div>
                     </div>
                     <!-- Mobile Menu Button -->
-                    <button id="mobile-menu-button" class="ml-2 p-2 text-gray-600 hover:text-blue-600 md:hidden">
+                    <button id="mobile-menu-button" class="ml-2 p-2 text-gray-600 hover:text-orange-600 md:hidden">
                         <i class="fas fa-bars text-lg"></i>
                     </button>
                 </div>
@@ -371,7 +371,7 @@
                 <form action="{{ route('shop') }}" method="GET">
                     <div class="relative">
                         <input type="text" name="search" placeholder="Cari produk..." 
-                               class="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                               class="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
                         <button type="submit" class="absolute right-0 top-0 bottom-0 flex items-center px-3 text-gray-500">
                             <i class="fas fa-search"></i>
                         </button>
@@ -384,57 +384,57 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="mobile-menu">
         <div class="flex justify-between items-center mb-6">
-            <span class="text-lg font-bold text-blue-600">Menu</span>
+            <span class="text-lg font-bold text-orange-600">Menu</span>
             <button id="close-menu-button" class="text-gray-600">
                 <i class="fas fa-times text-xl"></i>
             </button>
         </div>
         
         <div class="space-y-4">
-            <a href="{{ route('home') }}" class="block py-2 text-gray-800 hover:text-blue-600 {{ request()->routeIs('home') ? 'text-blue-600 font-medium' : '' }}">
+            <a href="{{ route('home') }}" class="block py-2 text-gray-800 hover:text-orange-600 {{ request()->routeIs('home') ? 'text-orange-600 font-medium' : '' }}">
                 <i class="fas fa-home mr-2"></i>Beranda
             </a>
-            <a href="{{ route('shop') }}" class="block py-2 text-gray-800 hover:text-blue-600 {{ request()->routeIs('shop') ? 'text-blue-600 font-medium' : '' }}">
+            <a href="{{ route('shop') }}" class="block py-2 text-gray-800 hover:text-orange-600 {{ request()->routeIs('shop') ? 'text-orange-600 font-medium' : '' }}">
                 <i class="fas fa-shopping-bag mr-2"></i>Shop
             </a>
             
             <!-- Mobile Accordion Menu -->
             <div class="border-b border-gray-200 pb-4">
-                <button class="flex items-center justify-between w-full py-2 text-gray-800 hover:text-blue-600 focus:outline-none" id="category-accordion-toggle">
+                <button class="flex items-center justify-between w-full py-2 text-gray-800 hover:text-orange-600 focus:outline-none" id="category-accordion-toggle">
                     <span><i class="fas fa-th-large mr-2"></i>Kategori</span>
                     <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
                 </button>
                 <div class="mobile-accordion-content pl-8 space-y-2">
                     @foreach(App\Models\Category::all() as $category)
-                        <a href="{{ route('shop', ['category' => $category->id]) }}" class="block py-1 text-gray-600 hover:text-blue-600">
+                        <a href="{{ route('shop', ['category' => $category->id]) }}" class="block py-1 text-gray-600 hover:text-orange-600">
                             {{ $category->name }}
                         </a>
                     @endforeach
                 </div>
             </div>
             
-            <a href="{{ route('about') }}" class="block py-2 text-gray-800 hover:text-blue-600">
+            <a href="{{ route('about') }}" class="block py-2 text-gray-800 hover:text-orange-600">
                 <i class="fas fa-info-circle mr-2"></i>Tentang Kami
             </a>
-            <a href="{{ route('contact.index') }}" class="block py-2 text-gray-800 hover:text-blue-600">
+            <a href="{{ route('contact.index') }}" class="block py-2 text-gray-800 hover:text-orange-600">
                 <i class="fas fa-phone mr-2"></i>CS
             </a>
             <div class="border-t border-gray-200 pt-4 mt-4">
                 @auth
-                    <a href="{{ route('profile.index') }}" class="block py-2 text-gray-800 hover:text-blue-600">
+                    <a href="{{ route('profile.index') }}" class="block py-2 text-gray-800 hover:text-orange-600">
                         <i class="fas fa-user mr-2"></i>Profile
                     </a>
                     <form method="POST" action="{{ route('logout') }}" id="mobile-logout-form">
                         @csrf
-                        <button type="button" class="w-full text-left flex items-center py-2 text-gray-800 hover:text-blue-600" id="mobile-logout-button">
+                        <button type="button" class="w-full text-left flex items-center py-2 text-gray-800 hover:text-orange-600" id="mobile-logout-button">
                             <i class="fas fa-sign-out-alt mr-2"></i>Logout
                         </button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="block py-2 text-gray-800 hover:text-blue-600">
+                    <a href="{{ route('login') }}" class="block py-2 text-gray-800 hover:text-orange-600">
                         <i class="fas fa-sign-in-alt mr-2"></i>Login
                     </a>
-                    <a href="{{ route('register') }}" class="block py-2 text-gray-800 hover:text-blue-600">
+                    <a href="{{ route('register') }}" class="block py-2 text-gray-800 hover:text-orange-600">
                         <i class="fas fa-user-plus mr-2"></i>Register
                     </a>
                 @endauth
@@ -456,14 +456,14 @@
                 <!-- About -->
                 <div>
                     <a href="{{ route('home') }}" class="flex items-center">
-                        <img src="{{ asset('images/logoFooter.png') }}" alt="GPX Store" class=" w-32 mb-4">
+                        <img src="{{ asset('images/logoFooter.png') }}" alt="Fixpoint" class="w-40 mb-4">
                     </a>
-                    <p class="text-gray-300 mb-4">Tas premium berkualitas dengan harga terjangkau, tersedia dalam berbagai model untuk semua kebutuhan Anda.</p>
+                    <p class="text-gray-300 mb-4">Toko material bangunan terlengkap dengan harga terjangkau. Menyediakan berbagai kebutuhan material untuk proyek konstruksi dan renovasi Anda.</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-white hover:text-blue-400 transition-colors"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-white hover:text-blue-400 transition-colors"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-white hover:text-blue-400 transition-colors"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white hover:text-blue-400 transition-colors"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="text-white hover:text-orange-300 transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white hover:text-orange-300 transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white hover:text-orange-300 transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white hover:text-orange-300 transition-colors"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 
@@ -493,19 +493,19 @@
                     <h3 class="text-lg font-semibold mb-4">Kontak</h3>
                     <ul class="space-y-3 text-gray-300">
                         <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-blue-400"></i>
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-orange-400"></i>
                             <span>Jl. Raya Utama No.123, Jakarta Selatan, Indonesia</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-phone-alt mr-3 text-blue-400"></i>
+                            <i class="fas fa-phone-alt mr-3 text-orange-400"></i>
                             <span>0895-33743-6089</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-envelope mr-3 text-blue-400"></i>
-                            <span>info@gpx-store.com</span>
+                            <i class="fas fa-envelope mr-3 text-orange-400"></i>
+                            <span>info@fixpoint.id</span>
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-clock mr-3 text-blue-400"></i>
+                            <i class="fas fa-clock mr-3 text-orange-400"></i>
                             <span>Senin - Sabtu: 09:00 - 20:00</span>
                         </li>
                     </ul>
@@ -516,7 +516,7 @@
             
             <div class="flex flex-col md:flex-row justify-between items-center py-4">
                 <div class="mb-4 md:mb-0">
-                    <p>&copy; {{ date('Y') }} GPX Store. All rights reserved.</p>
+                    <p>&copy; {{ date('Y') }} Fixpoint. All rights reserved.</p>
                 </div>
                 {{-- <div class="flex space-x-4">
                     <img src="{{ asset('images/payment/visa.png') }}" alt="Visa" class="h-8">
@@ -644,7 +644,7 @@
                         text: "Kamu akan keluar!",
                         icon: 'warning',
                         showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
+                        confirmButtonColor: '#f97316',
                         cancelButtonColor: '#d33',
                         confirmButtonText: 'Ya, logout!'
                     }).then((result) => {

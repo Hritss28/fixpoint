@@ -64,7 +64,7 @@
     <div class="text-center">
         <h3 class="text-lg font-medium text-gray-900 mb-2">Need Help?</h3>
         <p class="text-gray-600 mb-2">Contact our customer support team</p>
-        <p class="text-blue-600">support@gpxstore.com</p>
+        <p class="text-blue-600">support@fixpoint.id</p>
         <p class="text-blue-600">+62 812-3456-7890</p>
     </div>
 </div>

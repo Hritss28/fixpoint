@@ -87,7 +87,7 @@
         <div class="w-full max-w-md">
             <div class="text-center mb-8" data-aos="fade-up">
                 <h1 class="text-3xl font-bold text-gray-900">Create an Account</h1>
-                <p class="text-gray-600 mt-2">Join GPX Store for a better shopping experience</p>
+                <p class="text-gray-600 mt-2">Daftar di Fixpoint untuk pengalaman belanja lebih baik</p>
             </div>
             
             @if ($errors->any())
@@ -256,7 +256,7 @@
             
             <div data-aos="fade-up" data-aos-delay="300">
                 <h1 class="text-4xl font-bold text-white mb-6">Join Us Today!</h1>
-                <p class="text-lg text-indigo-100">Register as a GPX Store member and enjoy exclusive benefits.</p>
+                <p class="text-lg text-indigo-100">Daftar sebagai member Fixpoint dan nikmati berbagai keuntungan eksklusif.</p>
                 
                 <div class="grid grid-cols-2 gap-6 mt-10">
                     <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-sm rounded-xl p-6 text-left">

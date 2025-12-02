@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Konfirmasi Email GPX Store</title>
+    <title>Konfirmasi Email Fixpoint</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,7 +39,7 @@
     
     <div class="content">
         <h2>Selamat!</h2>
-        <p>Email ini adalah konfirmasi bahwa sistem email GPX Store telah berhasil dikonfigurasi dan berfungsi dengan baik.</p>
+        <p>Email ini adalah konfirmasi bahwa sistem email Fixpoint telah berhasil dikonfigurasi dan berfungsi dengan baik.</p>
         <p>Anda sekarang dapat mengirimkan:</p>
         <ul>
             <li>Notifikasi pembelian</li>
@@ -51,7 +51,7 @@
     </div>
     
     <div class="footer">
-        <p>© {{ date('Y') }} GPX Store. All rights reserved.</p>
+        <p>© {{ date('Y') }} Fixpoint. All rights reserved.</p>
     </div>
 </body>
 </html>

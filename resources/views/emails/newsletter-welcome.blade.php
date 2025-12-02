@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to GPX Store Newsletter</title>
+    <title>Selamat Datang di Newsletter Fixpoint</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -45,25 +45,25 @@
 </head>
 <body>
     <div class="header">
-        <h1>Selamat Datang di Newsletter GPX Store!</h1>
+        <h1>Selamat Datang di Newsletter Fixpoint!</h1>
     </div>
     <div class="content">
         <p>Halo!</p>
-        <p>Terima kasih telah berlangganan newsletter GPX Store. Kami senang Anda bergabung dengan komunitas kami!</p>
+        <p>Terima kasih telah berlangganan newsletter Fixpoint. Kami senang Anda bergabung dengan komunitas kami!</p>
         <p>Dengan berlangganan, Anda akan menerima:</p>
         <ul>
-            <li>Informasi produk terbaru</li>
+            <li>Informasi produk material bangunan terbaru</li>
             <li>Promo dan diskon eksklusif</li>
-            <li>Tips dan trik seputar produk kami</li>
-            <li>Berita dan update dari GPX Store</li>
+            <li>Tips dan trik seputar material bangunan</li>
+            <li>Berita dan update dari Fixpoint</li>
         </ul>
         <p>Sebagai ucapan terima kasih, kami memberikan kode diskon <strong>WELCOME15</strong> untuk pembelian pertama Anda dengan diskon 15%.</p>
         <a href="{{ route('shop') }}" class="button">Belanja Sekarang</a>
-        <p>Jika Anda memiliki pertanyaan, jangan ragu untuk menghubungi kami di <a href="mailto:support@gpxstore.com">support@gpxstore.com</a>.</p>
-        <p>Salam hangat,<br>Tim GPX Store</p>
+        <p>Jika Anda memiliki pertanyaan, jangan ragu untuk menghubungi kami di <a href="mailto:support@fixpoint.id">support@fixpoint.id</a>.</p>
+        <p>Salam hangat,<br>Tim Fixpoint</p>
     </div>
     <div class="footer">
-        <p>© {{ date('Y') }} GPX Store. All rights reserved.</p>
+        <p>© {{ date('Y') }} Fixpoint. All rights reserved.</p>
         <p>Jika Anda tidak ingin menerima email dari kami di masa mendatang, silakan <a href="#">klik di sini</a> untuk berhenti berlangganan.</p>
     </div>
 </body>

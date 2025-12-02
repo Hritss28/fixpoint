@@ -1,7 +1,7 @@
 @component('mail::message')
 # Pesan Baru dari Form Kontak
 
-Anda telah menerima pesan baru dari form kontak website Gpx-Store.
+Anda telah menerima pesan baru dari form kontak website Fixpoint.
 
 **Pengirim:** {{ $contactMessage->name }}  
 **Email:** {{ $contactMessage->email }}  

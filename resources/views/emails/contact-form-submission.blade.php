@@ -3,7 +3,7 @@
 
 Halo {{ $contactMessage->name }},
 
-Terima kasih telah menghubungi Gpx-Store. Pesan Anda dengan subjek **{{ $contactMessage->subject }}** telah kami terima dan sedang dalam proses.
+Terima kasih telah menghubungi Fixpoint. Pesan Anda dengan subjek **{{ $contactMessage->subject }}** telah kami terima dan sedang dalam proses.
 
 **ID Pesan Anda:** #{{ $contactMessage->id }}
 

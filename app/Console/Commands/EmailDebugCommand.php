@@ -23,7 +23,7 @@ class EmailDebugCommand extends Command
             'password' => '', // Set in command
             'from' => [
                 'address' => '', // Set in command
-                'name' => 'GPX Store'
+                'name' => 'Fixpoint'
             ]
         ],
         'mailtrap' => [
@@ -34,8 +34,8 @@ class EmailDebugCommand extends Command
             'username' => '', // Ask in command 
             'password' => '', // Ask in command
             'from' => [
-                'address' => 'gpxstore@example.com',
-                'name' => 'GPX Store'
+                'address' => 'fixpoint@example.com',
+                'name' => 'Fixpoint'
             ]
         ],
         'mailgun' => [
@@ -45,7 +45,7 @@ class EmailDebugCommand extends Command
             'endpoint' => 'api.mailgun.net',
             'from' => [
                 'address' => '', // Ask in command
-                'name' => 'GPX Store'
+                'name' => 'Fixpoint'
             ]
         ]
     ];
@@ -94,7 +94,7 @@ class EmailDebugCommand extends Command
         
         try {
             $this->line("\n📝 Sending simple test email...");
-            $result = Mail::raw('This is a test email from GPX Store sent at ' . now() . 
+            $result = Mail::raw('This is a test email from Fixpoint sent at ' . now() . 
                                "\n\nEmail Configuration:" .
                                "\nDriver: " . config('mail.default') .
                                "\nHost: " . config('mail.mailers.smtp.host') .
@@ -103,7 +103,7 @@ class EmailDebugCommand extends Command
                                "\nFrom: " . config('mail.from.address'),
                 function($message) use ($to) {
                     $message->to($to)
-                            ->subject('GPX Store Email Test');
+                            ->subject('Fixpoint Email Test');
                 });
             
             $this->info("✓ Email sent successfully with current configuration!");
@@ -176,7 +176,7 @@ class EmailDebugCommand extends Command
         // Test sending
         try {
             $this->line("\n📝 Sending test email via $providerName...");
-            Mail::raw("This is a test email from GPX Store via $providerName sent at " . now() . 
+            Mail::raw("This is a test email from Fixpoint via $providerName sent at " . now() . 
                       "\n\nEmail Configuration:" .
                       "\nDriver: " . config('mail.default') .
                       "\nHost: " . config('mail.mailers.' . config('mail.default') . '.host') .
@@ -184,7 +184,7 @@ class EmailDebugCommand extends Command
                       "\nFrom: " . config('mail.from.address'),
                 function($message) use ($to) {
                     $message->to($to)
-                            ->subject("GPX Store Test via " . config('mail.default'));
+                            ->subject("Fixpoint Test via " . config('mail.default'));
                 });
             
             $this->info("✓ Email sent successfully with $providerName!");

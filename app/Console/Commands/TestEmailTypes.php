@@ -62,9 +62,9 @@ class TestEmailTypes extends Command
     protected function sendSimpleEmail($email)
     {
         $this->info("Queuing simple test email...");
-        Mail::raw("This is a simple test email from GPX Store sent at ".now(), function($message) use ($email) {
+        Mail::raw("This is a simple test email from Fixpoint sent at ".now(), function($message) use ($email) {
             $message->to($email)
-                    ->subject('GPX Store Simple Test Email');
+                    ->subject('Fixpoint Simple Test Email');
         });
         $this->info("✓ Simple email queued");
     }
@@ -227,11 +227,11 @@ class TestEmailTypes extends Command
         $this->info("\nSending direct email without queue...");
         
         try {
-            $result = Mail::raw("This is a DIRECT test email from GPX Store sent at " . now() . 
+            $result = Mail::raw("This is a DIRECT test email from Fixpoint sent at " . now() . 
                              "\n\nThis email bypasses the queue to test direct delivery.", 
                 function($message) use ($email) {
                     $message->to($email)
-                            ->subject('GPX Store DIRECT Mail Test');
+                            ->subject('Fixpoint DIRECT Mail Test');
                 });
                 
             $this->info("✓ Direct email sent successfully!");

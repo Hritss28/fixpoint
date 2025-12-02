@@ -15,15 +15,15 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
             <div>
                 <div class="about-content">
-                    <h2 class="text-2xl font-bold text-blue-600 mb-4 relative pb-3">Tentang Gpx-Store</h2>
+                    <h2 class="text-2xl font-bold text-blue-600 mb-4 relative pb-3">Tentang Fixpoint</h2>
                     <div class="text-gray-600">
-                        {!! nl2br(e($aboutUs->introduction ?? 'Gpx-Store adalah toko online terpercaya yang menyediakan berbagai produk berkualitas tinggi. Didirikan pada tahun 2023, kami berkomitmen untuk memberikan pengalaman belanja online terbaik kepada pelanggan kami.')) !!}
+                        {!! nl2br(e($aboutUs->introduction ?? 'Fixpoint adalah toko material bangunan terpercaya yang menyediakan berbagai produk material berkualitas tinggi. Didirikan pada tahun 2023, kami berkomitmen untuk memberikan pengalaman belanja material bangunan terbaik kepada pelanggan kami.')) !!}
                     </div>
                 </div>
             </div>
             <div>
                 <div class="rounded-lg overflow-hidden shadow-lg">
-                    <img src="{{ asset('images/logo.png') }}" alt="Gpx Store" class="w-full h-auto object-cover">
+                    <img src="{{ asset('images/logo.png') }}" alt="Fixpoint" class="w-full h-auto object-cover">
                 </div>
             </div>
         </div>
@@ -160,7 +160,7 @@
                             </div>
                             <div>
                                 <h4 class="text-lg font-semibold text-gray-800">Email</h4>
-                                <p class="text-gray-600">info@gpx-store.com</p>
+                                <p class="text-gray-600">info@fixpoint.id</p>
                             </div>
                         </div>
                     </div>

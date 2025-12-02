@@ -60,12 +60,12 @@ class FixMailConfigCommand extends Command
         $this->line("1. Go to your Google Account > Security");
         $this->line("2. Enable 2-Step Verification if not already enabled");
         $this->line("3. Go to App passwords");
-        $this->line("4. Select 'Mail' and 'Other' (custom name, e.g., 'Laravel GPX Store')");
+        $this->line("4. Select 'Mail' and 'Other' (custom name, e.g., 'Laravel Fixpoint')");
         $this->line("5. Use the generated password below");
         
         $email = $this->ask('Enter Gmail address');
         $password = $this->secret('Enter Gmail App Password');
-        $fromName = $this->ask('Enter from name', 'GPX Store');
+        $fromName = $this->ask('Enter from name', 'Fixpoint');
         
         $config = [
             'MAIL_MAILER' => 'smtp',
@@ -88,7 +88,7 @@ class FixMailConfigCommand extends Command
         $domain = $this->ask('Enter Mailgun domain');
         $secret = $this->secret('Enter Mailgun API key');
         $fromEmail = $this->ask('Enter from email address');
-        $fromName = $this->ask('Enter from name', 'GPX Store');
+        $fromName = $this->ask('Enter from name', 'Fixpoint');
         
         $config = [
             'MAIL_MAILER' => 'mailgun',
@@ -110,7 +110,7 @@ class FixMailConfigCommand extends Command
         
         $key = $this->secret('Enter SendGrid API key');
         $fromEmail = $this->ask('Enter from email address');
-        $fromName = $this->ask('Enter from name', 'GPX Store');
+        $fromName = $this->ask('Enter from name', 'Fixpoint');
         
         $config = [
             'MAIL_MAILER' => 'sendgrid',
@@ -131,8 +131,8 @@ class FixMailConfigCommand extends Command
         
         $username = $this->ask('Enter Mailtrap username/inbox ID');
         $password = $this->secret('Enter Mailtrap password/API key');
-        $fromEmail = $this->ask('Enter from email address', 'gpxstore@example.com');
-        $fromName = $this->ask('Enter from name', 'GPX Store');
+        $fromEmail = $this->ask('Enter from email address', 'fixpoint@example.com');
+        $fromName = $this->ask('Enter from name', 'Fixpoint');
         
         $config = [
             'MAIL_MAILER' => 'smtp',

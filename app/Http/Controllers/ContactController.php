@@ -47,11 +47,11 @@ class ContactController extends Controller
         // Kirim email ke admin
         try {
             // Gunakan email admin dari konfigurasi atau default
-            $adminEmail = config('mail.admin_address', 'admin@gpx-store.com');
+            $adminEmail = config('mail.admin_address', 'admin@fixpoint.id');
             Mail::to($adminEmail)->send(new ContactFormSubmission($contactMessage));
             
             // Kirim juga ke alamat email tetap sebagai backup (opsional)
-            // Mail::to('cs@gpx-store.com')->send(new ContactFormSubmission($contactMessage));
+            // Mail::to('cs@fixpoint.id')->send(new ContactFormSubmission($contactMessage));
         } catch (\Exception $e) {
             // Log error tapi jangan hentikan proses
             Log::error('Gagal mengirim email notifikasi: ' . $e->getMessage());

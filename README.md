@@ -1,19 +1,20 @@
-# GPX Store
+# Fixpoint - Toko Material Bangunan
 
-GPX Store adalah platform e-commerce berbasis Laravel yang memungkinkan pengguna untuk menjelajahi, membeli, dan mengelola produk secara online. Website ini dibangun menggunakan Laravel 12 dengan Filament sebagai admin panel, serta integrasi pembayaran dengan Midtrans.
+Fixpoint adalah platform e-commerce toko material bangunan berbasis Laravel yang memungkinkan pengguna untuk menjelajahi, membeli, dan mengelola produk material bangunan secara online. Website ini dibangun menggunakan Laravel 12 dengan Filament sebagai admin panel, serta integrasi pembayaran dengan Midtrans.
 
 ## Fitur Utama
 - Manajemen pengguna dan autentikasi
-- Manajemen produk, kategori, dan merek
+- Manajemen produk material bangunan, kategori, dan merek
+- Harga bertingkat (Retail/Grosir/Kontraktor)
+- Sistem pembayaran tempo (kredit)
+- Manajemen stok dan supplier
+- Surat jalan digital (Delivery Notes)
 - Keranjang belanja dan checkout
 - Sistem pembayaran dengan Midtrans
 - Admin panel menggunakan Filament
 - Pengelolaan transaksi dan pesanan
-- Sistem newsletter dan email marketing
-- Wishlist dan manajemen ulasan produk
-- Manajemen biaya pengiriman
-- Manajemen promo dan kode diskon
 - Dashboard analitik untuk melihat performa toko
+- Laporan piutang dan aging analysis
 
 ## Instalasi
 
@@ -72,7 +73,7 @@ php artisan shield:generate --all
 ```
 
 ## Sistem Newsletter
-GPX Store memiliki sistem newsletter terintegrasi yang memungkinkan:
+Fixpoint memiliki sistem newsletter terintegrasi yang memungkinkan:
 - Pendaftaran pelanggan untuk newsletter
 - Pengiriman email campaign massal
 - Pengelolaan subscriber

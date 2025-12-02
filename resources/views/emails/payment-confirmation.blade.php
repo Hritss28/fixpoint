@@ -133,14 +133,14 @@
             
             <a href="{{ route('orders.show', $order->id) }}" class="button">View Order Details</a>
             
-            <p>If you have any questions about your order, please contact our customer service team at <a href="mailto:support@gpxstore.com">support@gpxstore.com</a> or call us at (021) 1234-5678.</p>
+            <p>If you have any questions about your order, please contact our customer service team at <a href="mailto:support@fixpoint.id">support@fixpoint.id</a> or call us at (021) 1234-5678.</p>
             
             <p>Thank you for shopping with us!</p>
             
-            <p>Best regards,<br>GPX Store Team</p>
+            <p>Best regards,<br>Fixpoint Team</p>
         </div>
         <div class="footer">
-            <p>&copy; {{ date('Y') }} GPX Store. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} Fixpoint. All rights reserved.</p>
             <p>This email was sent to {{ $order->email }} because you made a purchase at our store.</p>
         </div>
     </div>

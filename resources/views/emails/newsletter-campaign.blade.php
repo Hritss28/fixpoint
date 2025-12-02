@@ -51,7 +51,7 @@
         {!! $newsletter->content !!}
     </div>
     <div class="footer">
-        <p>© {{ date('Y') }} GPX Store. All rights reserved.</p>
+        <p>© {{ date('Y') }} Fixpoint. All rights reserved.</p>
         <p>Jika Anda tidak ingin menerima email dari kami di masa mendatang, silakan <a href="#">klik di sini</a> untuk berhenti berlangganan.</p>
     </div>
 </body>

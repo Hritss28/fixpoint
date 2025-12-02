@@ -36,12 +36,12 @@ class HomeBannerResource extends Resource
                     
                 Forms\Components\TextInput::make('banner_title')
                     ->label('Banner Title (Optional)')
-                    ->placeholder('Koleksi Terbaru 2025')
+                    ->placeholder('Material Berkualitas 2025')
                     ->maxLength(100),
                     
                 Forms\Components\TextInput::make('banner_subtitle')
                     ->label('Banner Subtitle (Optional)')
-                    ->placeholder('Eksklusif GPX')
+                    ->placeholder('Fixpoint - Toko Material Terpercaya')
                     ->maxLength(200),
                     
                 Forms\Components\Toggle::make('is_active')
