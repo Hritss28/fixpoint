@@ -3,7 +3,7 @@
 @section('content')
 <div class="about-us-wrapper">
     <!-- Hero Header Section -->
-    <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-16 mb-10">
+    <div class="bg-gradient-to-r from-orange-700 to-amber-600 text-white py-16 mb-10">
         <div class="container mx-auto px-4">
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-center">{{ $aboutUs->title ?? 'Tentang Kami' }}</h1>
             <div class="w-24 h-1 bg-white mx-auto mt-4"></div>
@@ -15,7 +15,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
             <div>
                 <div class="about-content">
-                    <h2 class="text-2xl font-bold text-blue-600 mb-4 relative pb-3">Tentang Fixpoint</h2>
+                    <h2 class="text-2xl font-bold text-orange-700 mb-4 relative pb-3">Tentang Fixpoint</h2>
                     <div class="text-gray-600">
                         {!! nl2br(e($aboutUs->introduction ?? 'Fixpoint adalah toko material bangunan terpercaya yang menyediakan berbagai produk material berkualitas tinggi. Didirikan pada tahun 2023, kami berkomitmen untuk memberikan pengalaman belanja material bangunan terbaik kepada pelanggan kami.')) !!}
                     </div>
@@ -31,9 +31,9 @@
         <!-- Vision & Mission Section -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <div>
-                <div class="bg-white rounded-lg shadow-lg p-8 h-full border-t-4 border-blue-500 transition-transform hover:-translate-y-2 duration-300">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-eye text-blue-500 text-2xl"></i>
+                <div class="bg-white rounded-lg shadow-lg p-8 h-full border-t-4 border-orange-600 transition-transform hover:-translate-y-2 duration-300">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-eye text-orange-600 text-2xl"></i>
                     </div>
                     <h2 class="text-2xl font-bold text-center mb-4">Visi Kami</h2>
                     <div class="text-gray-600 text-center">
@@ -42,9 +42,9 @@
                 </div>
             </div>
             <div>
-                <div class="bg-white rounded-lg shadow-lg p-8 h-full border-t-4 border-purple-500 transition-transform hover:-translate-y-2 duration-300">
-                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-bullseye text-purple-500 text-2xl"></i>
+                <div class="bg-white rounded-lg shadow-lg p-8 h-full border-t-4 border-amber-600 transition-transform hover:-translate-y-2 duration-300">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-bullseye text-amber-600 text-2xl"></i>
                     </div>
                     <h2 class="text-2xl font-bold text-center mb-4">Misi Kami</h2>
                     <div class="text-gray-600 text-center">
@@ -61,7 +61,7 @@
         <!-- Team Section -->
         <div class="bg-gray-50 rounded-xl p-8 mb-16">
             <h2 class="text-3xl font-bold text-center mb-2">Tim Kami</h2>
-            <div class="w-24 h-1 bg-blue-500 mx-auto mb-10"></div>
+            <div class="w-24 h-1 bg-orange-600 mx-auto mb-10"></div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div>
@@ -71,13 +71,13 @@
                         </div>
                         <div class="p-6 text-center">
                             <h3 class="text-xl font-bold text-gray-800">Ahmad Ramadhan</h3>
-                            <p class="text-blue-500 font-medium mb-3">CEO & Founder</p>
+                            <p class="text-orange-600 font-medium mb-3">CEO & Founder</p>
                             <p class="text-gray-600 text-sm mb-4">Berpengalaman lebih dari 10 tahun di bidang e-commerce dan retail.</p>
                             <div class="flex justify-center space-x-3">
-                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors">
+                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-orange-600 hover:text-white transition-colors">
                                     <i class="fab fa-linkedin"></i>
                                 </a>
-                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors">
+                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-orange-600 hover:text-white transition-colors">
                                     <i class="fab fa-twitter"></i>
                                 </a>
                             </div>
@@ -91,13 +91,13 @@
                         </div>
                         <div class="p-6 text-center">
                             <h3 class="text-xl font-bold text-gray-800">Budi Setiawan</h3>
-                            <p class="text-blue-500 font-medium mb-3">CTO</p>
+                            <p class="text-orange-600 font-medium mb-3">CTO</p>
                             <p class="text-gray-600 text-sm mb-4">Ahli teknologi dengan keahlian dalam pengembangan platform e-commerce.</p>
                             <div class="flex justify-center space-x-3">
-                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors">
+                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-orange-600 hover:text-white transition-colors">
                                     <i class="fab fa-linkedin"></i>
                                 </a>
-                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors">
+                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-orange-600 hover:text-white transition-colors">
                                     <i class="fab fa-github"></i>
                                 </a>
                             </div>
@@ -111,13 +111,13 @@
                         </div>
                         <div class="p-6 text-center">
                             <h3 class="text-xl font-bold text-gray-800">Siti Aisyah</h3>
-                            <p class="text-blue-500 font-medium mb-3">Marketing Director</p>
+                            <p class="text-orange-600 font-medium mb-3">Marketing Director</p>
                             <p class="text-gray-600 text-sm mb-4">Spesialis pemasaran digital dengan fokus pada pertumbuhan bisnis.</p>
                             <div class="flex justify-center space-x-3">
-                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors">
+                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-orange-600 hover:text-white transition-colors">
                                     <i class="fab fa-linkedin"></i>
                                 </a>
-                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors">
+                                <a href="#" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-orange-600 hover:text-white transition-colors">
                                     <i class="fab fa-instagram"></i>
                                 </a>
                             </div>
@@ -131,12 +131,12 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
                 <div class="bg-white rounded-lg shadow-lg p-8 h-full">
-                    <h2 class="text-2xl font-bold text-blue-600 mb-6 relative pb-3">Hubungi Kami</h2>
+                    <h2 class="text-2xl font-bold text-orange-700 mb-6 relative pb-3">Hubungi Kami</h2>
                     
                     <div class="space-y-6">
                         <div class="flex items-start">
-                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-map-marker-alt text-blue-500"></i>
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-orange-600"></i>
                             </div>
                             <div>
                                 <h4 class="text-lg font-semibold text-gray-800">Alamat</h4>
@@ -145,8 +145,8 @@
                         </div>
                         
                         <div class="flex items-start">
-                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-phone text-blue-500"></i>
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-phone text-orange-600"></i>
                             </div>
                             <div>
                                 <h4 class="text-lg font-semibold text-gray-800">Telepon</h4>
@@ -155,8 +155,8 @@
                         </div>
                         
                         <div class="flex items-start">
-                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-envelope text-blue-500"></i>
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-orange-600"></i>
                             </div>
                             <div>
                                 <h4 class="text-lg font-semibold text-gray-800">Email</h4>
@@ -166,16 +166,16 @@
                     </div>
                     
                     <div class="flex space-x-3 mt-8">
-                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors">
+                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-orange-600 hover:text-white transition-colors">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors">
+                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-orange-600 hover:text-white transition-colors">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors">
+                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-orange-600 hover:text-white transition-colors">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-colors">
+                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-orange-600 hover:text-white transition-colors">
                             <i class="fab fa-youtube"></i>
                         </a>
                     </div>
@@ -208,7 +208,7 @@
         bottom: 0;
         width: 50px;
         height: 3px;
-        background-color: #3b82f6;
+        background-color: #c2410c;
     }
     
     @media (max-width: 640px) {

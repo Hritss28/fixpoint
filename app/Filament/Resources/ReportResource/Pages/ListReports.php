@@ -6,6 +6,7 @@ use App\Filament\Resources\ReportResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 
 class ListReports extends ListRecords
 {
@@ -18,33 +19,32 @@ class ListReports extends ListRecords
                 ->label('New Report')
                 ->icon('heroicon-o-plus'),
                 
-            Action::make('quick_reports')
+            ActionGroup::make([
+                Action::make('daily_sales')
+                    ->label('Today\'s Sales')
+                    ->icon('heroicon-o-currency-dollar')
+                    ->action(fn () => $this->generateQuickReport('sales', 'today')),
+                    
+                Action::make('weekly_inventory')
+                    ->label('This Week\'s Inventory')
+                    ->icon('heroicon-o-cube')
+                    ->action(fn () => $this->generateQuickReport('inventory', 'this_week')),
+                    
+                Action::make('monthly_receivables')
+                    ->label('Monthly Receivables')
+                    ->icon('heroicon-o-banknotes')
+                    ->action(fn () => $this->generateQuickReport('receivables', 'this_month')),
+                    
+                Action::make('overdue_payments')
+                    ->label('Overdue Payments')
+                    ->icon('heroicon-o-exclamation-triangle')
+                    ->color('warning')
+                    ->action(fn () => $this->generateOverdueReport()),
+            ])
                 ->label('Quick Reports')
                 ->icon('heroicon-o-bolt')
                 ->color('info')
-                ->dropdown()
-                ->dropdownActions([
-                    Action::make('daily_sales')
-                        ->label('Today\'s Sales')
-                        ->icon('heroicon-o-currency-dollar')
-                        ->action(fn () => $this->generateQuickReport('sales', 'today')),
-                        
-                    Action::make('weekly_inventory')
-                        ->label('This Week\'s Inventory')
-                        ->icon('heroicon-o-cube')
-                        ->action(fn () => $this->generateQuickReport('inventory', 'this_week')),
-                        
-                    Action::make('monthly_receivables')
-                        ->label('Monthly Receivables')
-                        ->icon('heroicon-o-banknotes')
-                        ->action(fn () => $this->generateQuickReport('receivables', 'this_month')),
-                        
-                    Action::make('overdue_payments')
-                        ->label('Overdue Payments')
-                        ->icon('heroicon-o-exclamation-triangle')
-                        ->color('warning')
-                        ->action(fn () => $this->generateOverdueReport()),
-                ]),
+                ->button(),
         ];
     }
     

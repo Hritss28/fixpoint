@@ -79,11 +79,7 @@ class CreditDashboardWidget extends BaseWidget
             Stat::make('Credit Utilization', number_format($creditUtilization, 1) . '%')
                 ->description('Overall credit utilization rate')
                 ->descriptionIcon('heroicon-m-chart-pie')
-                ->color(function () use ($creditUtilization): string {
-                    if ($creditUtilization > 80) return 'danger';
-                    if ($creditUtilization > 60) return 'warning';
-                    return 'success';
-                }),
+                ->color($creditUtilization > 80 ? 'danger' : ($creditUtilization > 60 ? 'warning' : 'success')),
                 
             Stat::make('High Risk Customers', $highRiskCustomers)
                 ->description('Customers requiring attention')
