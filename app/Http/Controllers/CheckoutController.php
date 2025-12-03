@@ -124,14 +124,25 @@ class CheckoutController extends Controller
     
     public function process(Request $request)
     {
-        // Validasi input form checkout
+        // Log incoming request for debugging
+        Log::debug('Checkout process started', [
+            'all_inputs' => $request->all(),
+            'user_id' => Auth::id()
+        ]);
+        
+        // Validasi input form checkout - make name optional since it comes from hidden field
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
             'email' => 'required|email',
-            'phone' => 'required|string|max:15',
+            'phone' => 'required|string|max:20',
+            'address_id' => 'required|exists:addresses,id',
+            'shipping_method' => 'required|string',
         ]);
         
         $user = Auth::user();
+        
+        // Use user's name if form name is empty
+        $customerName = $request->input('name') ?: $user->name;
         
         // Check if email verification is required and if the email is not verified
         if (Schema::hasColumn('users', 'email_verified_at') && $user->email_verified_at === null) {

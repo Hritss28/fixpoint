@@ -156,6 +156,24 @@
     <!-- Background effect -->
     <div class="animated-bg"></div>
 
+    <!-- Validation Errors Display -->
+    @if ($errors->any())
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+            <strong class="font-bold">Terjadi kesalahan!</strong>
+            <ul class="mt-2 list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+            <span class="block sm:inline">{{ session('error') }}</span>
+        </div>
+    @endif
+
     <form id="checkout-form" action="{{ route('checkout.process') }}" method="POST" class="relative">
         @csrf
         <div class="flex flex-col lg:flex-row gap-8">
@@ -227,31 +245,35 @@
                     <div class="space-y-3 mb-6">
                         <!-- Saved Addresses -->
                         @if(isset($addresses) && count($addresses) > 0)
+                            @php
+                                // Get default address, or first address if no default
+                                $selectedAddress = $addresses->firstWhere('is_default', true) ?? $addresses->first();
+                            @endphp
                             <div class="border rounded-lg p-4 bg-blue-50 border-blue-200">
-                                @foreach($addresses as $address)
-                                    @if($address->is_default)
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <h4 class="text-sm font-semibold text-gray-900">{{ $address->name }}</h4>
-                                                <p class="text-sm text-gray-600 mt-1">{{ $address->phone }}</p>
-                                            </div>
-                                            <div>
-                                                <span class="address-badge address-badge-primary">Default</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mt-3 text-sm text-gray-700">
-                                            <p>{{ $address->address_line1 }}</p>
-                                            @if($address->address_line2)
-                                                <p>{{ $address->address_line2 }}</p>
-                                            @endif
-                                            <p>{{ $address->city }}, {{ $address->province }} {{ $address->postal_code }}</p>
-                                            <p>{{ $address->country }}</p>
-                                        </div>
-                                        
-                                        <input type="hidden" name="address_id" value="{{ $address->id }}">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-gray-900">{{ $selectedAddress->name ?? $selectedAddress->recipient_name }}</h4>
+                                        <p class="text-sm text-gray-600 mt-1">{{ $selectedAddress->phone }}</p>
+                                    </div>
+                                    <div>
+                                        @if($selectedAddress->is_default)
+                                            <span class="address-badge address-badge-primary">Default</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-3 text-sm text-gray-700">
+                                    <p>{{ $selectedAddress->address_line1 }}</p>
+                                    @if($selectedAddress->address_line2)
+                                        <p>{{ $selectedAddress->address_line2 }}</p>
                                     @endif
-                                @endforeach
+                                    <p>{{ $selectedAddress->city }}, {{ $selectedAddress->province }} {{ $selectedAddress->postal_code }}</p>
+                                    @if($selectedAddress->country)
+                                        <p>{{ $selectedAddress->country }}</p>
+                                    @endif
+                                </div>
+                                
+                                <input type="hidden" name="address_id" value="{{ $selectedAddress->id }}">
 
                                 <div class="mt-4 text-center">
                                     <a href="{{ route('profile.addresses') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center justify-center">
@@ -289,60 +311,101 @@
                     </h2>
                     
                     <div class="space-y-3 mt-4">
-                        <div class="mb-4">
-                            <h3 class="text-sm font-medium text-gray-700 mb-2">Pilih Ekspedisi</h3>
-                            
-                            <!-- Courier Selection -->
-                            <label for="courier" class="block text-sm font-medium text-gray-700 mb-2"></label>
-                            <div class="relative">
-                                <select id="courier" name="courier" class="form-control appearance-none pr-10 pl-4 py-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full transition-colors duration-200">
-                                    <option value="" disabled selected>Pilih Jasa Pengiriman</option>
-                                    <option value="jne" class="py-2">JNE</option>
-                                    <option value="tiki" class="py-2">TIKI</option>
-                                    <option value="pos" class="py-2">POS Indonesia</option>
-                                    <option value="anteraja" class="py-2">AnterAja</option>
-                                    <option value="sicepat" class="py-2">SiCepat</option>
-                                    <option value="jnt" class="py-2">J&T Express</option>
-                                </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        <!-- Info Pengiriman Lokal -->
+                        <div class="p-4 bg-orange-50 border border-orange-200 rounded-lg mb-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
                                     </svg>
                                 </div>
-                            </div>
-                            
-                            <div class="flex courier-logos mt-3 mb-4 justify-between">
-                                <img src="{{ asset('images/couriers/jne.png') }}" alt="JNE" class="h-8 object-contain opacity-60 hover:opacity-100 transition-opacity cursor-pointer" onclick="selectCourierByLogo('jne')">
-                                <img src="{{ asset('images/couriers/tiki.png') }}" alt="TIKI" class="h-8 object-contain opacity-60 hover:opacity-100 transition-opacity cursor-pointer" onclick="selectCourierByLogo('tiki')">
-                                <img src="{{ asset('images/couriers/pos.png') }}" alt="POS" class="h-8 object-contain opacity-60 hover:opacity-100 transition-opacity cursor-pointer" onclick="selectCourierByLogo('pos')">
-                                <img src="{{ asset('images/couriers/anteraja.png') }}" alt="AnterAja" class="h-8 object-contain opacity-60 hover:opacity-100 transition-opacity cursor-pointer" onclick="selectCourierByLogo('anteraja')">
-                                <img src="{{ asset('images/couriers/sicepat.png') }}" alt="SiCepat" class="h-8 object-contain opacity-60 hover:opacity-100 transition-opacity cursor-pointer" onclick="selectCourierByLogo('sicepat')">
-                                <img src="{{ asset('images/couriers/jnt.png') }}" alt="J&T" class="h-8 object-contain opacity-60 hover:opacity-100 transition-opacity cursor-pointer" onclick="selectCourierByLogo('jnt')">
-                            </div>
-                            
-                            <button type="button" id="check-shipping" class="w-full flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                                </svg>
-                                Cek Opsi Pengiriman
-                            </button>
-                        </div>
-                        
-                        <!-- Shipping results will be displayed here -->
-                        <div id="shipping-options" class="space-y-3">
-                            <div class="p-4 text-sm text-gray-500 border border-gray-200 rounded-md bg-gray-50">
-                                Silakan pilih kurir untuk melihat opsi pengiriman yang tersedia.
-                            </div>
-                        </div>
-                        
-                        <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md text-sm text-yellow-700" id="shipping-notice" style="display:none;">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                                </div>
                                 <div class="ml-3">
-                                    <p>Jika Anda ingin menggunakan alamat pengiriman yang berbeda, silakan ubah alamat pengiriman pada halaman profil Anda.</p>
+                                    <h4 class="text-sm font-medium text-orange-800">Pengiriman Lokal</h4>
+                                    <p class="text-sm text-orange-700 mt-1">Pengiriman hanya tersedia untuk area dalam kota dan sekitarnya menggunakan kurir toko.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pilihan Metode Pengiriman -->
+                        <h3 class="text-sm font-medium text-gray-700 mb-3">Pilih Metode Pengiriman</h3>
+                        
+                        <div id="shipping-options" class="space-y-3">
+                            <!-- Kurir Toko - Same Day -->
+                            <div class="shipping-method flex items-start p-4 border-2 border-orange-500 rounded-lg bg-orange-50 cursor-pointer" onclick="selectShippingMethod(this, 'kurir_toko_sameday')">
+                                <input type="radio" name="shipping_method" value="kurir_toko_sameday" checked
+                                    data-cost="15000" data-courier="KURIR TOKO"
+                                    class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 mt-1">
+                                <div class="ml-3 flex-grow">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <span class="text-sm font-semibold text-gray-900">Kurir Toko - Same Day</span>
+                                            <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                                Rekomendasi
+                                            </span>
+                                        </div>
+                                        <span class="text-sm font-bold text-orange-600">Rp 15.000</span>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mt-1">Pengiriman hari ini (order sebelum jam 14:00)</p>
+                                    <p class="text-xs text-gray-400 mt-1">
+                                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        Estimasi tiba: 2-4 jam
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Kurir Toko - Regular -->
+                            <div class="shipping-method flex items-start p-4 border rounded-lg hover:border-orange-300 hover:bg-orange-50 cursor-pointer transition-all" onclick="selectShippingMethod(this, 'kurir_toko_regular')">
+                                <input type="radio" name="shipping_method" value="kurir_toko_regular"
+                                    data-cost="10000" data-courier="KURIR TOKO"
+                                    class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 mt-1">
+                                <div class="ml-3 flex-grow">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm font-semibold text-gray-900">Kurir Toko - Regular</span>
+                                        <span class="text-sm font-bold text-orange-600">Rp 10.000</span>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mt-1">Pengiriman 1-2 hari kerja</p>
+                                    <p class="text-xs text-gray-400 mt-1">
+                                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        Estimasi tiba: 1-2 hari
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Ambil di Toko -->
+                            <div class="shipping-method flex items-start p-4 border rounded-lg hover:border-orange-300 hover:bg-orange-50 cursor-pointer transition-all" onclick="selectShippingMethod(this, 'pickup')">
+                                <input type="radio" name="shipping_method" value="pickup"
+                                    data-cost="0" data-courier="PICKUP"
+                                    class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 mt-1">
+                                <div class="ml-3 flex-grow">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm font-semibold text-gray-900">Ambil di Toko</span>
+                                        <span class="text-sm font-bold text-green-600">GRATIS</span>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mt-1">Ambil pesanan langsung di toko kami</p>
+                                    <p class="text-xs text-gray-400 mt-1">
+                                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                        Jl. Raya Utama No.123, Jakarta Selatan
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Area Pengiriman -->
+                        <div class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-600">
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-gray-400 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                                </svg>
+                                <div>
+                                    <p class="font-medium text-gray-700">Area Jangkauan Pengiriman:</p>
+                                    <p class="mt-1">Jakarta Selatan, Jakarta Pusat, Jakarta Timur, Depok, Tangerang Selatan</p>
                                 </div>
                             </div>
                         </div>
@@ -383,8 +446,21 @@
                                 @if(isset($cartItems))
                                     @foreach($cartItems as $item)
                                         <div class="flex items-center py-3 {{ !$loop->last ? 'border-b border-gray-200' : '' }}">
-                                            <div class="flex-shrink-0 w-16 h-16 border border-gray-200 rounded overflow-hidden">
-                                                <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover">
+                                            <div class="flex-shrink-0 w-16 h-16 border border-gray-200 rounded overflow-hidden bg-gray-100 flex items-center justify-center">
+                                                @if($item->product->image)
+                                                    <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                    <div class="w-full h-full items-center justify-center text-gray-400 hidden">
+                                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                        </svg>
+                                                    </div>
+                                                @else
+                                                    <div class="w-full h-full flex items-center justify-center text-gray-400">
+                                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                        </svg>
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="ml-3 flex-1">
                                                 <h4 class="text-sm font-medium text-gray-900 line-clamp-1">{{ $item->product->name }}</h4>
@@ -490,30 +566,6 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-// Make selectCourierByLogo globally accessible
-function selectCourierByLogo(courierCode) {
-    const courierSelect = document.getElementById('courier');
-    if (courierSelect) {
-        courierSelect.value = courierCode;
-        
-        // Trigger change event to ensure proper behavior
-        const changeEvent = new Event('change', { bubbles: true });
-        courierSelect.dispatchEvent(changeEvent);
-        
-        // Highlight the selected logo
-        const logos = document.querySelectorAll('.courier-logos img');
-        logos.forEach(logo => {
-            if (logo.alt.toLowerCase().includes(courierCode.toLowerCase())) {
-                logo.classList.remove('opacity-60');
-                logo.classList.add('opacity-100');
-            } else {
-                logo.classList.add('opacity-60');
-                logo.classList.remove('opacity-100');
-            }
-        });
-    }
-}
-
 // Make shipping method functions globally accessible
 function selectShippingMethod(element, method) {
     const shippingMethods = document.querySelectorAll('.shipping-method');
@@ -700,233 +752,23 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('AOS initialization error:', e);
     }
 
-    // Get address data for RajaOngkir from selected address
-    function getSelectedAddressData() {
-        @if(isset($addresses) && count($addresses) > 0)
-            @foreach($addresses as $address)
-                @if($address->is_default)
-                    // Check if we have the required city_id
-                    @if(!empty($address->city_id))
-                        return {
-                            id: "{{ $address->id }}",
-                            city: "{{ $address->city }}",
-                            cityId: "{{ $address->city_id }}",
-                            province: "{{ $address->province }}",
-                            provinceId: "{{ $address->province_id }}",
-                            postalCode: "{{ $address->postal_code }}"
-                        };
-                    @else
-                        // Missing city_id - show a better error message
-                        setTimeout(() => {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Alamat Perlu Diperbarui',
-                                text: 'Alamat pengiriman Anda perlu diperbarui untuk menggunakan fitur pengiriman. Silahkan perbarui alamat Anda.',
-                                confirmButtonText: 'Perbarui Alamat',
-                                showCancelButton: true,
-                                cancelButtonText: 'Nanti'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href = "{{ route('addresses.edit', $address->id) }}";
-                                }
-                            });
-                        }, 500);
-                        
-                        return {
-                            id: "{{ $address->id }}",
-                            city: "{{ $address->city }}",
-                            // Use a default city ID for Jakarta
-                            cityId: "152",
-                            province: "{{ $address->province }}",
-                            provinceId: "6",
-                            postalCode: "{{ $address->postal_code }}"
-                        };
-                    @endif
-                @endif
-            @endforeach
-        @endif
-        return null;
-    }
-
-    // Initialize address data
-    const selectedAddress = getSelectedAddressData();
-    if (selectedAddress) {
-        console.log('Using address data for RajaOngkir:', selectedAddress);
+    // Check if user has address
+    const hasAddress = {{ isset($addresses) && count($addresses) > 0 ? 'true' : 'false' }};
+    
+    // Initialize shipping cost with first selected option (Same Day - Rp 15.000)
+    const initialShippingMethod = document.querySelector('input[name="shipping_method"]:checked');
+    if (initialShippingMethod) {
+        const initialCost = parseInt(initialShippingMethod.getAttribute('data-cost') || 0);
+        updateOrderSummary(initialCost);
         
-        // Show shipping notice if we have address data
-        document.getElementById('shipping-notice').style.display = 'block';
-        
-        // If we have city_id and province_id in the address data, we can use it directly
-        // This is useful for RajaOngkir API calls
-        if (selectedAddress.cityId && selectedAddress.provinceId) {
-            // You could set up a hidden field with this data for the form submission
-            const addressDataField = document.createElement('input');
-            addressDataField.type = 'hidden';
-            addressDataField.name = 'shipping_address_data';
-            addressDataField.value = JSON.stringify({
-                city_id: selectedAddress.cityId,
-                province_id: selectedAddress.provinceId,
-                address_id: selectedAddress.id
-            });
-            document.getElementById('checkout-form').appendChild(addressDataField);
-        }
+        // Set hidden inputs for the initial shipping
+        updateOrCreateHiddenInput('selected_shipping_cost', initialCost);
+        updateOrCreateHiddenInput('selected_courier', initialShippingMethod.getAttribute('data-courier'));
+        updateOrCreateHiddenInput('selected_service', initialShippingMethod.value);
     }
     
-    // Calculate initial total without shipping on page load
-    // We need to make sure the total only includes subtotal + tax - discount initially
+    // Calculate initial total
     recalculateTotal();
-    
-    // RajaOngkir API configuration
-    const rajaOngkirConfig = {
-        // Change to false when using production environment
-        isSandbox: true,
-        apiUrl: '/api/rajaongkir',
-        originCity: '152', // Default origin city (Jakarta Pusat)
-    };
-
-    // Check shipping options (expeditions)
-    const checkShippingBtn = document.getElementById('check-shipping');
-    const courierSelect = document.getElementById('courier');
-    const shippingOptionsContainer = document.getElementById('shipping-options');
-    
-    if (checkShippingBtn && courierSelect && shippingOptionsContainer) {
-        checkShippingBtn.addEventListener('click', function() {
-            const courier = courierSelect.value;
-            
-            if (!courier) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Pilih Kurir',
-                    text: 'Silakan pilih kurir terlebih dahulu',
-                    confirmButtonText: 'OK'
-                });
-                return;
-            }
-            
-            if (!selectedAddress || !selectedAddress.cityId) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Alamat Tidak Lengkap',
-                    text: 'Alamat pengiriman tidak memiliki ID kota. Silakan perbarui alamat Anda.',
-                    confirmButtonText: 'OK'
-                });
-                return;
-            }
-            
-            // Show loading
-            shippingOptionsContainer.innerHTML = `
-                <div class="p-4 text-center">
-                    <div class="inline-block animate-spin rounded-full h-6 w-6 border-t-2 border-blue-600 border-r-2 border-blue-600 border-b-2 border-blue-600 border-l-2 border-gray-100"></div>
-                    <p class="mt-2 text-sm text-gray-600">Memuat opsi pengiriman...</p>
-                </div>
-            `;
-            
-            // Calculate cart weight - assume 500g per item for this example
-            const cartItems = document.querySelectorAll('.max-h-60.overflow-y-auto > div');
-            const totalWeight = Math.max(cartItems.length * 500, 1000); // 500g per item, minimum 1kg
-            
-            // Debug information
-            console.log('Shipping request:', {
-                origin: rajaOngkirConfig.originCity,
-                destination: selectedAddress.cityId,
-                weight: totalWeight,
-                courier: courier
-            });
-            
-            // Fetch shipping costs
-            fetch('{{ route("checkout.shipping-cost") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    origin: rajaOngkirConfig.originCity,
-                    destination: selectedAddress.cityId,
-                    weight: totalWeight,
-                    courier: courier
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Shipping response:', data);
-                
-                if (data.success && data.results && data.results.length > 0) {
-                    let html = '<div class="space-y-3">';
-                    
-                    // Process courier services from the API structure
-                    data.results.forEach(result => {
-                        if (result.costs && result.costs.length > 0) {
-                            result.costs.forEach((option, index) => {
-                                const isChecked = index === 0 ? 'checked' : '';
-                                const isSelected = index === 0 ? 'selected' : '';
-                                
-                                const serviceName = option.service;
-                                const cost = parseInt(option.cost[0].value);
-                                const etd = option.cost[0].etd || '1-3';
-                                
-                                html += `
-                                    <div class="shipping-method ${isSelected} flex" onclick="selectShippingMethod(this, '${serviceName}')">
-                                        <input type="radio" name="shipping_method" value="${serviceName}" ${isChecked} 
-                                            data-cost="${cost}" data-courier="${courier.toUpperCase()}"
-                                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 mt-2">
-                                        <div class="ml-3 flex-grow">
-                                            <div class="flex justify-between items-center">
-                                                <span class="font-medium text-gray-900">${courier.toUpperCase()} - ${serviceName}</span>
-                                                <span class="font-medium text-blue-600">Rp ${formatNumber(cost)}</span>
-                                            </div>
-                                            <p class="text-sm text-gray-500">Estimasi pengiriman: ${etd.replace('HARI', '').trim()} hari</p>
-                                        </div>
-                                    </div>
-                                `;
-                            });
-                        }
-                    });
-                    
-                    html += '</div>';
-                    shippingOptionsContainer.innerHTML = html;
-                    
-                    // Update shipping cost display with the first option
-                    if (data.results[0].costs && data.results[0].costs.length > 0) {
-                        const firstOption = data.results[0].costs[0];
-                        const shippingCost = parseInt(firstOption.cost[0].value);
-                        updateOrderSummary(shippingCost);
-                        
-                        // Add hidden input for the selected shipping method
-                        let shippingInput = document.querySelector('input[name="selected_shipping_cost"]');
-                        if (!shippingInput) {
-                            shippingInput = document.createElement('input');
-                            shippingInput.type = 'hidden';
-                            shippingInput.name = 'selected_shipping_cost';
-                            document.getElementById('checkout-form').appendChild(shippingInput);
-                        }
-                        shippingInput.value = shippingCost;
-                    }
-                    
-                } else {
-                    shippingOptionsContainer.innerHTML = `
-                        <div class="p-4 text-sm text-red-500 border border-red-200 rounded-md bg-red-50">
-                            Tidak ada opsi pengiriman tersedia untuk kurir dan tujuan yang dipilih.
-                        </div>
-                    `;
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching shipping costs:', error);
-                shippingOptionsContainer.innerHTML = `
-                    <div class="p-4 text-sm text-red-500 border border-red-200 rounded-md bg-red-50">
-                        Gagal memuat opsi pengiriman. Silakan coba lagi.
-                    </div>
-                `;
-            });
-        });
-    }
     
     // Form submission handler
     const checkoutForm = document.getElementById('checkout-form');
@@ -941,19 +783,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Shipping Method Required',
+                    title: 'Metode Pengiriman Diperlukan',
                     text: 'Silakan pilih metode pengiriman sebelum melanjutkan ke pembayaran',
                     confirmButtonText: 'OK'
                 });
-                
-                // Scroll to shipping section
-                const shippingMethodSection = document.querySelector('#shipping-options');
-                if (shippingMethodSection) {
-                    shippingMethodSection.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }
                 
                 return false;
             }
@@ -968,7 +801,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // If no address is selected, prevent form submission
-            if (!selectedAddress) {
+            if (!hasAddress) {
                 e.preventDefault();
                 button.disabled = false;
                 button.innerHTML = '<span>Place Order</span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>';
@@ -987,26 +820,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
-            
-            @if(isset($addresses) && count($addresses) == 0)
-            e.preventDefault();
-            button.disabled = false;
-            button.innerHTML = '<span>Place Order</span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>';
-            button.classList.remove('opacity-75', 'cursor-not-allowed');
-            
-            Swal.fire({
-                icon: 'error',
-                title: 'Alamat Pengiriman Diperlukan',
-                text: 'Anda harus menambahkan alamat pengiriman terlebih dahulu',
-                confirmButtonText: 'Tambah Alamat',
-                showCancelButton: true,
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = "{{ route('addresses.create') }}";
-                }
-            });
-            @endif
         });
     }
 
@@ -1157,19 +970,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Ketika nilai select berubah, update highlight logo
-    document.getElementById('courier').addEventListener('change', function() {
-        const selectedValue = this.value;
-        const logos = document.querySelectorAll('.courier-logos img');
-        
-        logos.forEach(logo => {
-            if (logo.alt.toLowerCase().includes(selectedValue.toLowerCase())) {
-                logo.classList.remove('opacity-60');
-                logo.classList.add('opacity-100');
-            } else {
-                logo.classList.add('opacity-60');
-                logo.classList.remove('opacity-100');
-            }
+    // Ketika shipping method dipilih (untuk styling tambahan)
+    const shippingMethods = document.querySelectorAll('.shipping-method');
+    shippingMethods.forEach(method => {
+        method.addEventListener('click', function() {
+            // Remove selected class and border styling from all methods
+            shippingMethods.forEach(m => {
+                m.classList.remove('border-orange-500', 'bg-orange-50', 'border-2');
+                m.classList.add('border');
+            });
+            
+            // Add selected styling to clicked method
+            this.classList.remove('border');
+            this.classList.add('border-2', 'border-orange-500', 'bg-orange-50');
         });
     });
 
@@ -1286,78 +1099,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         promoMessage.classList.remove('hidden');
-    }
-
-    // Helper function to recalculate the total
-    function recalculateTotal() {
-        // Get all the necessary elements
-        const subtotalElement = document.getElementById('subtotal-amount');
-        const taxElement = document.getElementById('tax-amount');
-        const shippingElement = document.getElementById('shipping-cost');
-        const discountElement = document.getElementById('discount-amount');
-        const totalElement = document.getElementById('order-total');
-        
-        if (!subtotalElement || !totalElement) return;
-        
-        // Parse all currency values
-        let subtotal = parseCurrency(subtotalElement.textContent);
-        let tax = taxElement ? parseCurrency(taxElement.textContent) : 0;
-        let shipping = 0; // Default to 0
-        let discount = 0;
-        
-        // Only add shipping if the element exists (meaning shipping was selected)
-        if (shippingElement) {
-            shipping = parseCurrency(shippingElement.textContent);
-        }
-        
-        // Only subtract discount if it exists
-        if (discountElement && window.getComputedStyle(discountElement.parentElement).display !== 'none') {
-            discount = parseCurrency(discountElement.textContent);
-        }
-        
-        // Calculate total
-        const total = subtotal + tax + shipping - discount;
-        
-        // Update the display
-        totalElement.textContent = `Rp ${formatNumber(total)}`;
-        
-        // Also update the hidden input for the backend
-        let totalInput = document.querySelector('input[name="final_total"]');
-        if (!totalInput) {
-            totalInput = document.createElement('input');
-            totalInput.type = 'hidden';
-            totalInput.name = 'final_total';
-            document.getElementById('checkout-form').appendChild(totalInput);
-        }
-        totalInput.value = total;
-        
-        // Add or update discount information if there's a discount
-        if (discount > 0) {
-            // Find or create the discount info element
-            let discountInfo = document.getElementById('discount-info');
-            if (!discountInfo) {
-                discountInfo = document.createElement('div');
-                discountInfo.id = 'discount-info';
-                discountInfo.className = 'mt-2 text-sm text-green-600';
-                
-                // Insert after the discount row
-                const discountRow = document.getElementById('discount-row');
-                if (discountRow) {
-                    discountRow.insertAdjacentElement('afterend', discountInfo);
-                }
-            }
-            
-            // Calculate discount percentage based on subtotal
-            const discountPercentage = subtotal > 0 ? Math.round((discount / subtotal) * 100) : 0;
-            // Modified to show only the percentage
-            discountInfo.textContent = `Potongan ${discountPercentage}%`;
-        } else {
-            // Remove discount info if exists and no discount
-            const discountInfo = document.getElementById('discount-info');
-            if (discountInfo) {
-                discountInfo.remove();
-            }
-        }
     }
 });
 </script>
