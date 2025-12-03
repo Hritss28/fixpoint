@@ -340,12 +340,13 @@
 @section('content')
     <!-- Hero Section with Parallax Effect -->
     <div class="relative overflow-hidden h-screen">
-        @if(isset($homeBanner) && $homeBanner->banner_image)
+        @if(isset($homeBanner) && $homeBanner->banner_image && !empty($homeBanner->banner_image))
             <!-- Banner Image Background -->
             <div class="absolute inset-0 overflow-hidden">
                 <!-- Product Banner Image from Admin -->
                 <img src="{{ Storage::url($homeBanner->banner_image) }}" alt="{{ $homeBanner->banner_title ?? 'Fixpoint Material Bangunan' }}" 
-                     class="w-full h-full object-cover object-center">
+                     class="w-full h-full object-cover object-center"
+                     onerror="this.parentElement.innerHTML='<div class=\'w-full h-full bg-gradient-to-r from-orange-800 to-amber-700\'></div>'">
                 
                 <!-- Gradient Overlay for better text readability -->
                 <div class="absolute inset-0 bg-gradient-to-r from-orange-900/70 to-yellow-900/60"></div>
@@ -425,7 +426,7 @@
                 @foreach([
                     ['icon' => 'check', 'title' => 'Kualitas Premium', 'desc' => 'Material terbaik', 'color' => 'blue', 'delay' => 0],
                     ['icon' => 'currency-dollar', 'title' => 'Harga Terbaik', 'desc' => 'Garansi harga termurah', 'color' => 'green', 'delay' => 100],
-                    ['icon' => 'truck', 'title' => 'Gratis Ongkir', 'desc' => 'Min. pembelian 500k', 'color' => 'purple', 'delay' => 200],
+                    ['icon' => 'truck', 'title' => 'Gratis Ongkir', 'desc' => 'Dalam Kota', 'color' => 'purple', 'delay' => 200],
                     ['icon' => 'shield', 'title' => 'Garansi 1 Tahun', 'desc' => 'Tanpa ribet', 'color' => 'pink', 'delay' => 300]
                 ] as $benefit)
                 <div class="benefit-card bg-white p-6 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="{{ $benefit['delay'] }}">
@@ -553,8 +554,15 @@
                 @foreach ($categories->take(6) as $index => $category)
                 <div class="category-card rounded-xl overflow-hidden shadow-xl" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                     <div class="relative aspect-w-16 aspect-h-10">
+                        @if($category->image && !empty($category->image))
                         <img src="{{ Storage::url($category->image) }}" alt="{{ $category->name }}"
-                             class="w-full h-80 object-cover transition-transform duration-700 transform hover:scale-110">
+                             class="w-full h-80 object-cover transition-transform duration-700 transform hover:scale-110"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'320\' viewBox=\'0 0 400 320\'%3E%3Crect fill=\'%23f97316\' width=\'400\' height=\'320\'/%3E%3Ctext fill=\'%23fff\' font-family=\'Arial\' font-size=\'20\' x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\'%3E{{ $category->name }}%3C/text%3E%3C/svg%3E'">
+                        @else
+                        <div class="w-full h-80 bg-gradient-to-br from-orange-600 to-amber-500 flex items-center justify-center">
+                            <span class="text-white text-2xl font-bold">{{ $category->name }}</span>
+                        </div>
+                        @endif
                     </div>
                     <div class="absolute inset-0 flex flex-col justify-end p-8 z-10">
                         <div data-aos="fade-right" data-aos-delay="{{ $index * 100 + 200 }}">
@@ -1096,26 +1104,32 @@
         });
     });
 
-    document.getElementById('copy-promo-button').addEventListener('click', function() {
-        var promoCode = document.getElementById('promo-code').innerText;
-        
-        navigator.clipboard.writeText(promoCode).then(function() {
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: 'Kode promo berhasil disalin ke clipboard.',
-                timer: 1500,
-                showConfirmButton: false
+    // Promo copy button - only if element exists
+    (function() {
+        var copyPromoButton = document.getElementById('copy-promo-button');
+        if (copyPromoButton) {
+            copyPromoButton.addEventListener('click', function() {
+                var promoCode = document.getElementById('promo-code').innerText;
+                
+                navigator.clipboard.writeText(promoCode).then(function() {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: 'Kode promo berhasil disalin ke clipboard.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }).catch(function(error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Gagal menyalin kode promo. Silakan coba lagi.',
+                    });
+                    console.error(error);
+                });
             });
-        }).catch(function(error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Gagal menyalin kode promo. Silakan coba lagi.',
-            });
-            console.error(error);
-        });
-    });
+        }
+    })();
 
     // Newsletter subscription functionality
     document.addEventListener('DOMContentLoaded', function() {

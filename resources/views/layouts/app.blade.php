@@ -258,11 +258,16 @@
                             Brand <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </a>
                         <div class="dropdown-menu" id="brand-dropdown-menu">
-                            @foreach(App\Models\Brand::all() as $brand)
+                            @foreach(App\Models\Brand::take(8)->get() as $brand)
                                 <a href="{{ route('shop', ['brand' => $brand->id]) }}" class="block px-4 py-2 hover:bg-gray-100">
                                     {{ $brand->name }}
                                 </a>
                             @endforeach
+                            @if(App\Models\Brand::count() > 8)
+                                <a href="{{ route('shop') }}" class="block px-4 py-2 text-orange-600 font-medium hover:bg-gray-100 border-t">
+                                    Lihat Semua Brand →
+                                </a>
+                            @endif
                         </div>
                     </div>
                     <!-- Categories Dropdown -->
@@ -271,11 +276,16 @@
                             Kategori <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </a>
                         <div class="dropdown-menu" id="category-dropdown-menu">
-                            @foreach(App\Models\Category::all() as $category)
+                            @foreach(App\Models\Category::take(8)->get() as $category)
                                 <a href="{{ route('shop', ['category' => $category->id]) }}" class="block px-4 py-2 hover:bg-gray-100">
                                     {{ $category->name }}
                                 </a>
                             @endforeach
+                            @if(App\Models\Category::count() > 8)
+                                <a href="{{ route('shop') }}" class="block px-4 py-2 text-orange-600 font-medium hover:bg-gray-100 border-t">
+                                    Lihat Semua Kategori →
+                                </a>
+                            @endif
                         </div>
                     </div>
                     
@@ -405,11 +415,16 @@
                     <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
                 </button>
                 <div class="mobile-accordion-content pl-8 space-y-2">
-                    @foreach(App\Models\Category::all() as $category)
+                    @foreach(App\Models\Category::take(8)->get() as $category)
                         <a href="{{ route('shop', ['category' => $category->id]) }}" class="block py-1 text-gray-600 hover:text-orange-600">
                             {{ $category->name }}
                         </a>
                     @endforeach
+                    @if(App\Models\Category::count() > 8)
+                        <a href="{{ route('shop') }}" class="block py-1 text-orange-600 font-medium hover:text-orange-700">
+                            Lihat Semua →
+                        </a>
+                    @endif
                 </div>
             </div>
             
