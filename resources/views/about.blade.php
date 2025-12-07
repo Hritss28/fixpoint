@@ -12,18 +12,39 @@
     
     <div class="container mx-auto px-4 pb-16">
         <!-- About Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 items-center">
             <div>
                 <div class="about-content">
-                    <h2 class="text-2xl font-bold text-orange-700 mb-4 relative pb-3">Tentang Fixpoint</h2>
-                    <div class="text-gray-600">
+                    <span class="inline-block px-4 py-1.5 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold mb-4">Tentang Kami</span>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 relative pb-3">Tentang Fixpoint</h2>
+                    <div class="text-gray-600 text-lg leading-relaxed">
                         {!! nl2br(e($aboutUs->introduction ?? 'Fixpoint adalah toko material bangunan terpercaya yang menyediakan berbagai produk material berkualitas tinggi. Didirikan pada tahun 2023, kami berkomitmen untuk memberikan pengalaman belanja material bangunan terbaik kepada pelanggan kami.')) !!}
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-3 gap-4 mt-8">
+                        <div class="text-center p-4 bg-orange-50 rounded-xl">
+                            <div class="text-2xl font-bold text-orange-600">500+</div>
+                            <div class="text-sm text-gray-600">Produk</div>
+                        </div>
+                        <div class="text-center p-4 bg-orange-50 rounded-xl">
+                            <div class="text-2xl font-bold text-orange-600">15K+</div>
+                            <div class="text-sm text-gray-600">Pelanggan</div>
+                        </div>
+                        <div class="text-center p-4 bg-orange-50 rounded-xl">
+                            <div class="text-2xl font-bold text-orange-600">25+</div>
+                            <div class="text-sm text-gray-600">Tahun</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <div class="rounded-lg overflow-hidden shadow-lg">
-                    <img src="{{ asset('images/logo.png') }}" alt="Fixpoint" class="w-full h-auto object-cover">
+            <div class="relative">
+                <!-- SVG Illustration with Animation -->
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-orange-200 to-amber-100 rounded-full blur-3xl opacity-50"></div>
+                    <img src="{{ asset('images/About us page-pana.svg') }}" 
+                         alt="Tentang Fixpoint" 
+                         class="relative w-full max-w-lg mx-auto drop-shadow-xl animate-swing">
                 </div>
             </div>
         </div>
@@ -209,6 +230,26 @@
         width: 50px;
         height: 3px;
         background-color: #c2410c;
+    }
+    
+    @keyframes swing {
+        0%, 100% { 
+            transform: rotate(-3deg) translateY(0);
+        }
+        25% {
+            transform: rotate(0deg) translateY(-8px);
+        }
+        50% { 
+            transform: rotate(3deg) translateY(0);
+        }
+        75% {
+            transform: rotate(0deg) translateY(-5px);
+        }
+    }
+    
+    .animate-swing {
+        animation: swing 6s ease-in-out infinite;
+        transform-origin: top center;
     }
     
     @media (max-width: 640px) {

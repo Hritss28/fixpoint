@@ -5,12 +5,21 @@
 @section('meta_description', 'Hubungi tim customer service Fixpoint untuk pertanyaan, bantuan, atau dukungan teknis.')
 
 @section('content')
-<div class="bg-gradient-to-b from-blue-50 to-white py-12">
+<div class="bg-gradient-to-b from-orange-50 to-white py-12">
     <div class="container mx-auto px-4">
-        <!-- Hero Section -->
-        <div class="text-center mb-12">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Hubungi Kami</h1>
-            <p class="text-gray-600 max-w-2xl mx-auto">Ada pertanyaan atau butuh bantuan? Tim customer service kami siap membantu.</p>
+        <!-- Hero Section with SVG -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+            <div class="text-center lg:text-left">
+                <span class="inline-block px-4 py-1.5 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold mb-4">Hubungi Kami</span>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">Ada Pertanyaan?</h1>
+                <p class="text-gray-600 text-lg max-w-xl">Tim customer service kami siap membantu Anda. Hubungi kami melalui berbagai channel yang tersedia.</p>
+            </div>
+            <div class="relative hidden lg:block">
+                <div class="absolute inset-0 bg-gradient-to-br from-orange-200 to-amber-100 rounded-full blur-3xl opacity-50 animate-pulse"></div>
+                <img src="{{ asset('images/Customer relationship management-bro.svg') }}" 
+                     alt="Customer Service" 
+                     class="relative w-full max-w-md mx-auto animate-pulse-scale">
+            </div>
         </div>
 
         <div class="max-w-5xl mx-auto">
@@ -359,6 +368,32 @@
         </div>
     </div>
 </div>
+
+<style>
+    @keyframes pulse-scale {
+        0%, 100% { 
+            transform: scale(1);
+            filter: drop-shadow(0 10px 15px rgba(234, 88, 12, 0.2));
+        }
+        50% { 
+            transform: scale(1.03);
+            filter: drop-shadow(0 20px 25px rgba(234, 88, 12, 0.3));
+        }
+    }
+    
+    @keyframes gentle-rotate {
+        0%, 100% { transform: rotate(-2deg); }
+        50% { transform: rotate(2deg); }
+    }
+    
+    .animate-pulse-scale {
+        animation: pulse-scale 4s ease-in-out infinite;
+    }
+    
+    .animate-gentle-rotate {
+        animation: gentle-rotate 6s ease-in-out infinite;
+    }
+</style>
 
 <script>
     function toggleFaq(element) {
