@@ -409,9 +409,11 @@ class ProductResource extends Resource
                         default => 'Unknown'
                     }),
                     
-                BadgeColumn::make('is_active')
+                Tables\Columns\IconColumn::make('is_active')
                     ->label('Active')
                     ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
                     ->trueColor('success')
                     ->falseColor('danger')
                     ->toggleable(),

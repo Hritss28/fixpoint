@@ -70,6 +70,14 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Alias for user relationship (for compatibility with customer-based queries)
+     */
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function items()
     {
         return $this->hasMany(OrderItem::class);

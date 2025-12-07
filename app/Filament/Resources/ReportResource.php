@@ -239,7 +239,7 @@ class ReportResource extends Resource
                     
                 Tables\Columns\TextColumn::make('schedule_frequency')
                     ->label('Frequency')
-                    ->visible(fn ($record) => $record->is_scheduled)
+                    ->visible(fn ($record) => $record?->is_scheduled ?? false)
                     ->badge()
                     ->color('info'),
                     

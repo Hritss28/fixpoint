@@ -130,7 +130,7 @@ class OrderResource extends Resource
                                             ->live()
                                             ->afterStateUpdated(function ($state, $get, $set) {
                                                 $unitPrice = (float) $get('unit_price');
-                                                $set('total_price', $state * $unitPrice);
+                                                $set('subtotal', $state * $unitPrice);
                                             }),
                                             
                                         TextInput::make('unit_price')
@@ -141,10 +141,10 @@ class OrderResource extends Resource
                                             ->live()
                                             ->afterStateUpdated(function ($state, $get, $set) {
                                                 $quantity = (float) $get('quantity');
-                                                $set('total_price', $quantity * $state);
+                                                $set('subtotal', $quantity * $state);
                                             }),
                                             
-                                        TextInput::make('total_price')
+                                        TextInput::make('subtotal')
                                             ->label('Total')
                                             ->numeric()
                                             ->disabled()
@@ -213,7 +213,7 @@ class OrderResource extends Resource
                                     ->label('Subtotal')
                                     ->content(function ($get) {
                                         $items = $get('orderItems') ?? [];
-                                        $subtotal = collect($items)->sum('total_price');
+                                        $subtotal = collect($items)->sum('subtotal');
                                         return 'Rp ' . number_format($subtotal, 0, ',', '.');
                                     }),
                                     
@@ -234,7 +234,7 @@ class OrderResource extends Resource
                                     ->label('Total Amount')
                                     ->content(function ($get) {
                                         $items = $get('orderItems') ?? [];
-                                        $subtotal = collect($items)->sum('total_price');
+                                        $subtotal = collect($items)->sum('subtotal');
                                         $delivery = $get('delivery_fee') ?? 0;
                                         $tax = $get('tax_amount') ?? 0;
                                         $total = $subtotal + $delivery + $tax;
@@ -294,10 +294,10 @@ class OrderResource extends Resource
                     ])
                     ->formatStateUsing(fn (string $state): string => ucfirst($state)),
                     
-                TextColumn::make('orderItems_sum_total_price')
+                TextColumn::make('orderItems_sum_subtotal')
                     ->label('Order Total')
-                    ->sum('orderItems', 'total_price')
-                    ->formatStateUsing(fn ($state): string => 'Rp ' . number_format($state + ($state * 0.1), 0, ',', '.'))
+                    ->sum('orderItems', 'subtotal')
+                    ->formatStateUsing(fn ($state): string => 'Rp ' . number_format($state ?? 0, 0, ',', '.'))
                     ->sortable()
                     ->color('success'),
                     

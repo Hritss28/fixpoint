@@ -19,7 +19,10 @@ class PrintController extends Controller
         ]);
         
         // Check if user has permission to view this order
-        if (!auth()->user()->hasRole('admin') && auth()->id() !== $order->customer_id) {
+        $user = auth()->user();
+        $isAdmin = $user->hasRole(['admin', 'super_admin']) || $user->hasPermissionTo('view_order');
+        
+        if (!$isAdmin && auth()->id() !== $order->user_id) {
             abort(403, 'Unauthorized to view this invoice.');
         }
         
@@ -35,7 +38,10 @@ class PrintController extends Controller
         ]);
         
         // Check if user has permission to view this delivery note
-        if (!auth()->user()->hasRole('admin') && auth()->id() !== $deliveryNote->order->customer_id) {
+        $user = auth()->user();
+        $isAdmin = $user->hasRole(['admin', 'super_admin']) || $user->hasPermissionTo('view_delivery::note');
+        
+        if (!$isAdmin && auth()->id() !== $deliveryNote->order->user_id) {
             abort(403, 'Unauthorized to view this delivery note.');
         }
         
