@@ -32,19 +32,14 @@ class Order extends Model
         'cancelled_at',
         // Building store fields
         'customer_type',
-        'payment_term_days',
-        'due_date',
         'delivery_note_id',
         'project_name',
         'tax_invoice_number',
-        'payment_status_type',
     ];
 
     protected $casts = [
         'cancelled_at' => 'datetime',
         // Building store casts
-        'payment_term_days' => 'integer',
-        'due_date' => 'date',
     ];
 
     protected function setStatusAttribute($value)
@@ -164,36 +159,11 @@ class Order extends Model
     }
 
     /**
-     * Relationship with Payment Term
-     */
-    public function paymentTerm()
-    {
-        return $this->hasOne(PaymentTerm::class);
-    }
-
-    /**
-     * Check if order uses credit/tempo payment
-     */
-    public function isCreditPayment(): bool
-    {
-        return $this->payment_term_days > 0;
-    }
-
-    /**
-     * Check if order is overdue
-     */
-    public function isOverdue(): bool
-    {
-        return $this->due_date && $this->due_date->isPast() && !$this->isPaid();
-    }
-
-    /**
      * Check if order is paid
      */
     public function isPaid(): bool
     {
-        return in_array($this->payment_status, ['paid']) || 
-               in_array($this->payment_status_type, [PaymentTerm::STATUS_PAID]);
+        return in_array($this->payment_status, ['paid']);
     }
 
     /**
@@ -208,22 +178,6 @@ class Order extends Model
             'distributor' => 'Distributor',
             default => 'Unknown',
         };
-    }
-
-    /**
-     * Get formatted due date
-     */
-    public function getFormattedDueDateAttribute(): ?string
-    {
-        return $this->due_date ? $this->due_date->format('d M Y') : null;
-    }
-
-    /**
-     * Get days until due
-     */
-    public function getDaysUntilDueAttribute(): ?int
-    {
-        return $this->due_date ? now()->diffInDays($this->due_date, false) : null;
     }
 
     /**
@@ -262,51 +216,6 @@ class Order extends Model
     }
 
     /**
-     * Create payment term for this order
-     */
-    public function createPaymentTerm(): ?PaymentTerm
-    {
-        if (!$this->isCreditPayment()) {
-            return null;
-        }
-
-        return PaymentTerm::create([
-            'order_id' => $this->id,
-            'customer_id' => $this->user_id,
-            'due_date' => $this->due_date,
-            'amount' => $this->total_amount,
-            'paid_amount' => 0,
-            'status' => PaymentTerm::STATUS_PENDING,
-        ]);
-    }
-
-    /**
-     * Scope for credit orders
-     */
-    public function scopeCreditOrders($query)
-    {
-        return $query->where('payment_term_days', '>', 0);
-    }
-
-    /**
-     * Scope for cash orders
-     */
-    public function scopeCashOrders($query)
-    {
-        return $query->where('payment_term_days', '=', 0);
-    }
-
-    /**
-     * Scope for overdue orders
-     */
-    public function scopeOverdue($query)
-    {
-        return $query->where('due_date', '<', now())
-            ->whereNotIn('payment_status', ['paid'])
-            ->whereNotIn('payment_status_type', [PaymentTerm::STATUS_PAID]);
-    }
-
-    /**
      * Scope by customer type
      */
     public function scopeByCustomerType($query, string $customerType)
@@ -326,17 +235,5 @@ class Order extends Model
             ->count();
         
         return $prefix . $date . str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
-    }
-
-    /**
-     * Calculate and set due date based on payment terms
-     */
-    public function calculateDueDate(): void
-    {
-        if ($this->payment_term_days > 0) {
-            $this->update([
-                'due_date' => now()->addDays($this->payment_term_days)
-            ]);
-        }
     }
 }

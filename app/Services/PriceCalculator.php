@@ -219,14 +219,7 @@ class PriceCalculator
      */
     private function getCustomerDiscount(int $customerId): float
     {
-        $customer = User::find($customerId);
-        
-        if (!$customer) {
-            return 0;
-        }
-        
-        // Check for customer-specific discount in customer_credits or profile
-        // For now, return 0 but can be extended based on business rules
+        // Customer specific discounts are removed
         return 0;
     }
     

@@ -381,280 +381,6 @@ Content-Type: application/pdf
 
 ---
 
-## 💳 PAYMENT TERMS API
-
-### 1. List Payment Terms
-
-```http
-GET /api/payment-terms?status=pending&customer_id=5
-Authorization: Bearer {token}
-
-# Response 200
-{
-    "success": true,
-    "data": [
-        {
-            "id": 1,
-            "order_id": 123,
-            "order_number": "ORD-20251118-0001",
-            "customer": {
-                "id": 5,
-                "name": "Budi Kontraktor"
-            },
-            "due_date": "2025-12-18",
-            "amount": 6500000,
-            "paid_amount": 0,
-            "remaining_amount": 6500000,
-            "status": "pending",
-            "days_until_due": 30,
-            "is_overdue": false
-        }
-    ]
-}
-```
-
-### 2. Create Payment Term
-
-```http
-POST /api/payment-terms
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-    "order_id": 123,
-    "customer_id": 5,
-    "amount": 6500000,
-    "payment_term_days": 30,
-    "notes": "Tempo 30 hari"
-}
-
-# Response 201
-{
-    "success": true,
-    "message": "Payment term created successfully",
-    "data": {
-        "id": 1,
-        "order_id": 123,
-        "due_date": "2025-12-18",
-        "amount": 6500000,
-        "status": "pending"
-    }
-}
-```
-
-### 3. Get Payment Term Detail
-
-```http
-GET /api/payment-terms/1
-Authorization: Bearer {token}
-
-# Response 200
-{
-    "success": true,
-    "data": {
-        "id": 1,
-        "order": {
-            "id": 123,
-            "order_number": "ORD-20251118-0001"
-        },
-        "customer": {
-            "id": 5,
-            "name": "Budi Kontraktor",
-            "company_name": "CV Budi Konstruksi"
-        },
-        "due_date": "2025-12-18",
-        "amount": 6500000,
-        "paid_amount": 0,
-        "remaining_amount": 6500000,
-        "status": "pending",
-        "payment_history": []
-    }
-}
-```
-
-### 4. Record Payment
-
-```http
-POST /api/payment-terms/1/pay
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-    "amount": 3000000,
-    "payment_method": "transfer",
-    "payment_reference": "TRF123456789",
-    "notes": "Pembayaran sebagian"
-}
-
-# Response 200
-{
-    "success": true,
-    "message": "Payment recorded successfully",
-    "data": {
-        "id": 1,
-        "paid_amount": 3000000,
-        "remaining_amount": 3500000,
-        "status": "partial",
-        "payment_date": "2025-11-25"
-    }
-}
-```
-
-### 5. Get Overdue Payments
-
-```http
-GET /api/payment-terms/overdue
-Authorization: Bearer {token}
-
-# Response 200
-{
-    "success": true,
-    "data": [
-        {
-            "id": 2,
-            "order_number": "ORD-20251001-0001",
-            "customer": {
-                "id": 6,
-                "name": "Toko ABC"
-            },
-            "due_date": "2025-11-01",
-            "days_overdue": 17,
-            "amount": 5000000,
-            "remaining_amount": 5000000,
-            "status": "overdue"
-        }
-    ],
-    "summary": {
-        "total_overdue": 2,
-        "total_amount": 8500000
-    }
-}
-```
-
----
-
-## 👤 CUSTOMER CREDIT API
-
-### 1. Get Customer Credit Info
-
-```http
-GET /api/customers/5/credit
-Authorization: Bearer {token}
-
-# Response 200
-{
-    "success": true,
-    "data": {
-        "customer_id": 5,
-        "customer_name": "Budi Kontraktor",
-        "credit_limit": 50000000,
-        "current_debt": 6500000,
-        "available_credit": 43500000,
-        "credit_usage_percentage": 13,
-        "is_active": true,
-        "pending_payments": [
-            {
-                "order_number": "ORD-20251118-0001",
-                "amount": 6500000,
-                "due_date": "2025-12-18"
-            }
-        ]
-    }
-}
-```
-
-### 2. Adjust Credit Limit
-
-```http
-POST /api/customers/5/credit/adjust
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-    "new_limit": 75000000,
-    "notes": "Increased due to good payment history"
-}
-
-# Response 200
-{
-    "success": true,
-    "message": "Credit limit adjusted successfully",
-    "data": {
-        "customer_id": 5,
-        "old_limit": 50000000,
-        "new_limit": 75000000,
-        "available_credit": 68500000
-    }
-}
-```
-
-### 3. Get Customer Debts
-
-```http
-GET /api/customers/5/debts
-Authorization: Bearer {token}
-
-# Response 200
-{
-    "success": true,
-    "data": {
-        "customer": {
-            "id": 5,
-            "name": "Budi Kontraktor",
-            "credit_limit": 50000000
-        },
-        "debts": [
-            {
-                "id": 1,
-                "order_number": "ORD-20251118-0001",
-                "order_date": "2025-11-18",
-                "due_date": "2025-12-18",
-                "amount": 6500000,
-                "paid_amount": 0,
-                "remaining": 6500000,
-                "status": "pending",
-                "days_until_due": 30
-            }
-        ],
-        "summary": {
-            "total_debt": 6500000,
-            "total_overdue": 0,
-            "pending_count": 1
-        }
-    }
-}
-```
-
-### 4. Aging Report
-
-```http
-GET /api/reports/aging
-Authorization: Bearer {token}
-
-# Response 200
-{
-    "success": true,
-    "data": [
-        {
-            "customer_id": 5,
-            "customer_name": "Budi Kontraktor",
-            "current": 6500000,
-            "days_1_30": 0,
-            "days_31_60": 0,
-            "days_61_90": 0,
-            "over_90": 0,
-            "total": 6500000
-        }
-    ],
-    "summary": {
-        "total_receivables": 6500000,
-        "current_percentage": 100
-    }
-}
-```
-
----
-
 ## 💰 PRICE MANAGEMENT API
 
 ### 1. Get Product Prices
@@ -829,7 +555,7 @@ Authorization: Bearer {token}
             "total_orders": 150,
             "total_sales": 450000000,
             "total_cash": 300000000,
-            "total_tempo": 150000000,
+
             "average_order_value": 3000000
         },
         "by_customer_type": [
@@ -997,7 +723,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
-    
+
     // Stock Management
     Route::prefix('stock')->group(function () {
         Route::post('/in', [StockController::class, 'stockIn']);
@@ -1007,33 +733,23 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/report', [StockController::class, 'report']);
         Route::get('/low-stock', [StockController::class, 'lowStock']);
     });
-    
+
     // Delivery Notes
     Route::apiResource('delivery-notes', DeliveryNoteController::class);
     Route::post('/delivery-notes/{id}/confirm', [DeliveryNoteController::class, 'confirm']);
     Route::get('/delivery-notes/{id}/print', [DeliveryNoteController::class, 'print']);
-    
-    // Payment Terms
-    Route::apiResource('payment-terms', PaymentTermController::class);
-    Route::post('/payment-terms/{id}/pay', [PaymentTermController::class, 'recordPayment']);
-    Route::get('/payment-terms/overdue', [PaymentTermController::class, 'overdue']);
-    
-    // Customer Credit
-    Route::prefix('customers')->group(function () {
-        Route::get('/{id}/credit', [CustomerCreditController::class, 'show']);
-        Route::post('/{id}/credit/adjust', [CustomerCreditController::class, 'adjust']);
-        Route::get('/{id}/debts', [CustomerCreditController::class, 'debts']);
-    });
-    
+
+
+
     // Price Management
     Route::get('/products/{id}/prices', [PriceController::class, 'index']);
     Route::post('/products/{id}/prices', [PriceController::class, 'store']);
     Route::post('/prices/calculate', [PriceController::class, 'calculate']);
-    
+
     // Suppliers
     Route::apiResource('suppliers', SupplierController::class);
     Route::get('/suppliers/{id}/products', [SupplierController::class, 'products']);
-    
+
     // Reports
     Route::prefix('reports')->group(function () {
         Route::get('/sales', [ReportController::class, 'sales']);

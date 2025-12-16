@@ -10,8 +10,6 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Supplier;
 use App\Models\PromoCode;
-use App\Models\CustomerCredit;
-use App\Models\PaymentTerm;
 use App\Models\DeliveryNote;
 use App\Models\DeliveryNoteItem;
 use App\Models\ContactMessage;
@@ -47,8 +45,6 @@ class SampleDataSeeder extends Seeder
                 array_merge($data, [
                     'password' => Hash::make('password123'),
                     'email_verified_at' => now(),
-                    'credit_limit' => $data['customer_type'] === 'retail' ? 0 : rand(5000000, 50000000),
-                    'payment_term_days' => $data['customer_type'] === 'retail' ? 0 : rand(14, 60),
                 ])
             );
         }
@@ -194,21 +190,6 @@ class SampleDataSeeder extends Seeder
                         'comment' => $reviewText,
                         'is_approved' => true,
                         'created_at' => now()->subDays(rand(1, 60)),
-                    ]
-                );
-            }
-        }
-
-        // 7. Create customer credits
-        $this->command->info('Creating customer credits...');
-        foreach ($customers as $customer) {
-            if ($customer->customer_type !== 'retail') {
-                CustomerCredit::firstOrCreate(
-                    ['customer_id' => $customer->id],
-                    [
-                        'credit_limit' => $customer->credit_limit,
-                        'is_active' => true,
-                        'notes' => 'Credit account untuk ' . $customer->name,
                     ]
                 );
             }

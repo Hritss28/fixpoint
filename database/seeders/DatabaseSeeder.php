@@ -21,23 +21,14 @@ class DatabaseSeeder extends Seeder
             
             // Products (enhanced with building store data)
             ProductSeeder::class, // Building materials products
+            StockMovementSeeder::class,
+            DeliveryNoteSeeder::class,
             // BuildingProductSeeder::class, // Disabled to avoid conflicts
             
             // Price levels (depends on products)
             PriceLevelSeeder::class,
             
-            // Customer credits (depends on users with customer_type)
-            CustomerCreditSeeder::class,
-            
-            // Stock movements (depends on products)
-            StockMovementSeeder::class,
-            
-            // Orders and related data
-            // Note: Make sure OrderSeeder creates orders with different customer types
-            
-            // Delivery notes and payment terms (depend on orders)
-            DeliveryNoteSeeder::class,
-            PaymentTermSeeder::class,
+
         ]);
     }
 }

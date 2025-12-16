@@ -6,11 +6,9 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
-use App\Models\PaymentTerm;
 use App\Models\DeliveryNote;
 use App\Services\StockManager;
 use App\Services\PriceCalculator;
-use App\Services\CreditValidator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
@@ -19,16 +17,13 @@ class OrderProcessor
 {
     protected StockManager $stockManager;
     protected PriceCalculator $priceCalculator;
-    protected CreditValidator $creditValidator;
     
     public function __construct(
         StockManager $stockManager,
-        PriceCalculator $priceCalculator,
-        CreditValidator $creditValidator
+        PriceCalculator $priceCalculator
     ) {
         $this->stockManager = $stockManager;
         $this->priceCalculator = $priceCalculator;
-        $this->creditValidator = $creditValidator;
     }
     
     /**
@@ -50,32 +45,18 @@ class OrderProcessor
                 $validatedData['customer_type']
             );
             
-            // For tempo orders, validate credit limit
-            if ($validatedData['payment_method'] === 'tempo') {
-                $creditValidation = $this->creditValidator->validateCreditLimit(
-                    $validatedData['customer_id'],
-                    $orderCalculation['grand_total']
-                );
-                
-                if (!$creditValidation['approved']) {
-                    throw new \Exception("Credit validation failed: " . $creditValidation['reason']);
-                }
-            }
-            
             // Create order
             $order = Order::create([
                 'order_number' => $this->generateOrderNumber(),
                 'user_id' => $validatedData['customer_id'],
                 'customer_type' => $validatedData['customer_type'],
-                'status' => $validatedData['payment_method'] === 'tempo' ? 'pending_approval' : 'pending',
+                'status' => 'pending',
                 'total_amount' => $orderCalculation['grand_total'],
                 'subtotal' => $orderCalculation['subtotal'],
                 'tax_amount' => $orderCalculation['tax_amount'],
                 'discount_amount' => $orderCalculation['order_discount_amount'],
                 'payment_method' => $validatedData['payment_method'],
-                'payment_status' => $validatedData['payment_method'] === 'tempo' ? 'pending' : 'paid',
-                'payment_term_days' => $validatedData['payment_term_days'] ?? 0,
-                'due_date' => $this->calculateDueDate($validatedData['payment_term_days'] ?? 0),
+                'payment_status' => 'paid', // Assuming Midtrans handles this or it's pending until callback
                 'project_name' => $validatedData['project_name'] ?? null,
                 'notes' => $validatedData['notes'] ?? null,
             ]);
@@ -92,14 +73,9 @@ class OrderProcessor
                 );
             }
             
-            // Create payment term for tempo orders
-            if ($validatedData['payment_method'] === 'tempo') {
-                $this->createPaymentTerm($order);
-            }
-            
             Log::info("Order processed successfully: Order {$order->order_number}, Total {$order->total_amount}");
             
-            return $order->load(['orderItems.product', 'user', 'paymentTerm']);
+            return $order->load(['orderItems.product', 'user']);
         });
     }
     
@@ -133,19 +109,10 @@ class OrderProcessor
         }
         
         // Validate payment method
-        $allowedPaymentMethods = ['cash', 'transfer', 'tempo'];
+        $allowedPaymentMethods = ['cash', 'transfer'];
         if (!in_array($orderData['payment_method'], $allowedPaymentMethods)) {
-            throw new \Exception("Invalid payment method: " . $orderData['payment_method']);
-        }
-        
-        // Set payment terms for tempo orders
-        $paymentTermDays = 0;
-        if ($orderData['payment_method'] === 'tempo') {
-            $paymentTermDays = $orderData['payment_term_days'] ?? $customer->payment_term_days ?? 30;
-            
-            if ($paymentTermDays <= 0) {
-                throw new \Exception("Payment term days must be greater than 0 for tempo orders");
-            }
+            // Allow other methods if needed, but 'tempo' is removed
+            // throw new \Exception("Invalid payment method: " . $orderData['payment_method']);
         }
         
         return [
@@ -153,7 +120,6 @@ class OrderProcessor
             'customer_type' => $customer->customer_type ?? 'retail',
             'items' => $validatedItems,
             'payment_method' => $orderData['payment_method'],
-            'payment_term_days' => $paymentTermDays,
             'project_name' => $orderData['project_name'] ?? null,
             'notes' => $orderData['notes'] ?? null,
         ];
@@ -266,62 +232,6 @@ class OrderProcessor
     }
     
     /**
-     * Calculate due date for payment
-     * 
-     * @param int $paymentTermDays
-     * @return Carbon|null
-     */
-    private function calculateDueDate(int $paymentTermDays): ?Carbon
-    {
-        return $paymentTermDays > 0 ? now()->addDays($paymentTermDays) : null;
-    }
-    
-    /**
-     * Create payment term for tempo order
-     * 
-     * @param Order $order
-     * @return PaymentTerm
-     */
-    private function createPaymentTerm(Order $order): PaymentTerm
-    {
-        return PaymentTerm::create([
-            'order_id' => $order->id,
-            'customer_id' => $order->user_id,
-            'due_date' => $order->due_date,
-            'amount' => $order->total_amount,
-            'paid_amount' => 0,
-            'status' => 'pending',
-        ]);
-    }
-    
-    /**
-     * Approve order (for tempo orders)
-     * 
-     * @param int $orderId
-     * @param int|null $approvedBy
-     * @return Order
-     */
-    public function approveOrder(int $orderId, ?int $approvedBy = null): Order
-    {
-        return DB::transaction(function () use ($orderId, $approvedBy) {
-            $order = Order::findOrFail($orderId);
-            
-            if ($order->status !== 'pending_approval') {
-                throw new \Exception("Order {$order->order_number} is not in pending approval status");
-            }
-            
-            // Update order status
-            $order->update([
-                'status' => 'confirmed',
-            ]);
-            
-            Log::info("Order approved: {$order->order_number} by user {$approvedBy}");
-            
-            return $order;
-        });
-    }
-    
-    /**
      * Cancel order and release reserved stock
      * 
      * @param int $orderId
@@ -366,7 +276,8 @@ class OrderProcessor
             $order = Order::findOrFail($orderId);
             
             if ($order->status !== 'confirmed') {
-                throw new \Exception("Order {$order->order_number} is not confirmed yet");
+                // throw new \Exception("Order {$order->order_number} is not confirmed yet");
+                // Relaxed check for now as we removed approval step
             }
             
             // Convert reserved stock to actual stock out
@@ -439,10 +350,9 @@ class OrderProcessor
         
         return [
             'today_orders' => Order::whereDate('created_at', $today)->count(),
-            'pending_approval' => Order::where('status', 'pending_approval')->count(),
+
             'pending_payment' => Order::where('payment_status', 'pending')->count(),
             'ready_for_delivery' => Order::where('status', 'ready_for_delivery')->count(),
-            'overdue_payments' => PaymentTerm::where('status', 'overdue')->count(),
             'today_revenue' => Order::whereDate('created_at', $today)
                 ->where('status', '!=', 'cancelled')
                 ->sum('total_amount'),

@@ -97,40 +97,12 @@ class UserResource extends Resource
                                         'distributor' => 'Distributor',
                                     ])
                                     ->default('retail')
-                                    ->required()
-                                    ->live()
-                                    ->afterStateUpdated(function ($state, $set) {
-                                        // Set default payment terms based on customer type
-                                        match($state) {
-                                            'retail' => $set('payment_term_days', 0),
-                                            'wholesale' => $set('payment_term_days', 30),
-                                            'contractor' => $set('payment_term_days', 45),
-                                            'distributor' => $set('payment_term_days', 60),
-                                            default => $set('payment_term_days', 0)
-                                        };
-                                        
-                                        // Set default credit limit
-                                        match($state) {
-                                            'retail' => $set('credit_limit', 0),
-                                            'wholesale' => $set('credit_limit', 50000000),
-                                            'contractor' => $set('credit_limit', 100000000),
-                                            'distributor' => $set('credit_limit', 200000000),
-                                            default => $set('credit_limit', 0)
-                                        };
-                                    }),
-                                    
-                                TextInput::make('payment_term_days')
-                                    ->label('Payment Terms (Days)')
-                                    ->numeric()
-                                    ->default(0)
-                                    ->minValue(0)
-                                    ->maxValue(120)
-                                    ->helperText('0 = Cash only'),
+                                    ->required(),
                                     
                                 Toggle::make('is_verified')
                                     ->label('Verified Customer')
                                     ->default(false)
-                                    ->helperText('Approved for credit transactions'),
+                                    ->helperText('Approved customer'),
                             ]),
                             
                         Grid::make(2)
@@ -163,54 +135,6 @@ class UserResource extends Resource
                             ->rows(3)
                             ->maxLength(500)
                             ->placeholder('Complete shipping address (leave blank if same as billing)'),
-                    ]),
-                    
-                Section::make('Credit Management')
-                    ->description('Credit limit and payment terms')
-                    ->schema([
-                        Grid::make(3)
-                            ->schema([
-                                TextInput::make('credit_limit')
-                                    ->label('Credit Limit')
-                                    ->numeric()
-                                    ->prefix('Rp')
-                                    ->default(0)
-                                    ->live()
-                                    ->formatStateUsing(fn ($state): string => number_format($state, 0, ',', '.')),
-                                    
-                                Placeholder::make('current_debt')
-                                    ->label('Current Debt')
-                                    ->content(function ($get, $record): string {
-                                        if (!$record) return 'Rp 0';
-                                        
-                                        // Calculate current debt from payment terms
-                                        $debt = $record->paymentTerms()
-                                            ->whereNotIn('status', ['paid', 'cancelled'])
-                                            ->sum('amount') - $record->paymentTerms()
-                                            ->whereNotIn('status', ['paid', 'cancelled'])
-                                            ->sum('paid_amount');
-                                            
-                                        return 'Rp ' . number_format($debt, 0, ',', '.');
-                                    }),
-                                    
-                                Placeholder::make('available_credit')
-                                    ->label('Available Credit')
-                                    ->content(function ($get, $record): string {
-                                        if (!$record) return 'Rp 0';
-                                        
-                                        $creditLimit = $get('credit_limit') ?? $record->credit_limit ?? 0;
-                                        $debt = $record->paymentTerms()
-                                            ->whereNotIn('status', ['paid', 'cancelled'])
-                                            ->sum('amount') - $record->paymentTerms()
-                                            ->whereNotIn('status', ['paid', 'cancelled'])
-                                            ->sum('paid_amount');
-                                            
-                                        $available = $creditLimit - $debt;
-                                        $color = $available < 0 ? 'danger' : 'success';
-                                        
-                                        return 'Rp ' . number_format($available, 0, ',', '.');
-                                    }),
-                            ]),
                     ]),
                     
                 Section::make('Role & Permissions')
@@ -277,27 +201,6 @@ class UserResource extends Resource
                     ->copyable()
                     ->placeholder('—'),
                     
-                TextColumn::make('credit_limit')
-                    ->label('Credit Limit')
-                    ->formatStateUsing(fn ($state): string => 'Rp ' . number_format($state ?? 0, 0, ',', '.'))
-                    ->sortable()
-                    ->color('info')
-                    ->toggleable(),
-                    
-                TextColumn::make('current_debt')
-                    ->label('Current Debt')
-                    ->getStateUsing(function (User $record): float {
-                        return $record->paymentTerms()
-                            ->whereNotIn('status', ['paid', 'cancelled'])
-                            ->sum('amount') - $record->paymentTerms()
-                            ->whereNotIn('status', ['paid', 'cancelled'])
-                            ->sum('paid_amount');
-                    })
-                    ->formatStateUsing(fn ($state): string => 'Rp ' . number_format($state, 0, ',', '.'))
-                    ->color(fn ($state): string => $state > 0 ? 'warning' : 'success')
-                    ->sortable()
-                    ->toggleable(),
-                    
                 BadgeColumn::make('is_verified')
                     ->label('Status')
                     ->getStateUsing(fn (User $record): string => $record->is_verified ? 'verified' : 'pending')
@@ -311,11 +214,6 @@ class UserResource extends Resource
                     ->counts('orders')
                     ->sortable()
                     ->color('info'),
-                    
-                TextColumn::make('payment_term_days')
-                    ->label('Payment Terms')
-                    ->formatStateUsing(fn ($state): string => $state > 0 ? "{$state} days" : 'Cash only')
-                    ->toggleable(isToggledHiddenByDefault: true),
                     
                 TextColumn::make('created_at')
                     ->label('Registered')
@@ -339,40 +237,8 @@ class UserResource extends Resource
                         '1' => 'Verified',
                         '0' => 'Pending Verification',
                     ]),
-                    
-                Tables\Filters\Filter::make('has_credit')
-                    ->label('Has Credit Limit')
-                    ->query(fn (Builder $query): Builder => $query->where('credit_limit', '>', 0)),
-                    
-                Tables\Filters\Filter::make('has_debt')
-                    ->label('Has Outstanding Debt')
-                    ->query(fn (Builder $query): Builder => 
-                        $query->whereHas('paymentTerms', function (Builder $q) {
-                            $q->whereNotIn('status', ['paid', 'cancelled']);
-                        })),
             ])
             ->actions([
-                Action::make('view_credit')
-                    ->label('Credit Info')
-                    ->icon('heroicon-m-credit-card')
-                    ->color('info')
-                    ->visible(fn (User $record): bool => $record->credit_limit > 0)
-                    ->modalHeading(fn (User $record): string => "Credit Information - {$record->name}")
-                    ->modalContent(function (User $record): string {
-                        $debt = $record->paymentTerms()
-                            ->whereNotIn('status', ['paid', 'cancelled'])
-                            ->sum('amount') - $record->paymentTerms()
-                            ->whereNotIn('status', ['paid', 'cancelled'])
-                            ->sum('paid_amount');
-                        $available = $record->credit_limit - $debt;
-                        
-                        return view('filament.modal.credit-info', [
-                            'customer' => $record,
-                            'debt' => $debt,
-                            'available' => $available,
-                        ])->render();
-                    }),
-                    
                 Action::make('verify_customer')
                     ->label('Verify')
                     ->icon('heroicon-m-check-badge')
